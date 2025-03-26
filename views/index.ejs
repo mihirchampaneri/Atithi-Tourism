@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+<% if(success.length>0){ %>
+  <div
+    class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500"
+  >
+    <span class="inline-block mt-1 mb-1 text-white"> <%- success %> </span>
+  </div>
+  <% } %>
+<% if(error.length>0){ %>
+<div
+  class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500"
+>
+  <span class="inline-block mt-1 mb-1 text-white"> <%= error %> </span>
+</div>
+<% } %>
+<div class="flex flex-col px-20">
+  <div class="absolute inset-0 w-full h-full bg-cover bg-center blur-sm z-[-1]" style="background-image: url('/img/bg.jpg');"></div>
+  <div class="w-full h-screen items-center justify-center flex px-20">
+
+    <% if(showSignup){ %>
+    <!-- Signup Form -->
+    <section class="relative bg-[#F9F6FE] bg-opacity-70 border container h-auto w-2/3 rounded-lg p-6">
+      <div class="relative left-1/2 -translate-x-1/2">
+        <h3 class="text-4xl rounded-lg p-3 text-center">
+          Welcome to
+          <span class="text-blue-600 font-semibold"> अतिथि Tourism </span>
+        </h3>
+      </div>
+    <div class="w-full flex items-center justify-between gap-6 h-full">
+      <div class=" rounded-lg p-6 m-10 bg-gray-800 justify-center w-full">
+        <h4 class="text-2xl font-bold text-gray-200 mb-4">Create Account</h4>
+        <form class="max-w-xl space-y-4 flex flex-col" autocomplete="off" action="/users/register" method="post">
+          <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Full Name" name="fullname" />
+          <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="email" placeholder="Email" name="email" />
+          <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="password" placeholder="Password" name="password" />
+          <div class="flex items-center justify-between flex-wrap">
+            <p class="text-white">have an account ? <a class="text-sm text-blue-500 -200 hover:underline" href="/">Log In</a></p>
+          </div>
+          <input class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4" type="submit" value="Create Account" />
+        </form>
+      </div>
+      <img class="justify-center items-center p-6 w-[400px] h-[400px]" src="/img/signup.svg" alt="">
+    </div>
+  </section>
+    <% } else { %>
+    <!-- Login Form -->
+     <section class="relative box-border bg-[#F9F6FE] bg-opacity-70 border container h-auto w-2/3 rounded-lg p-6">
+      <div class="relative left-1/2 -translate-x-1/2">
+        <h3 class="text-4xl rounded-lg p-3 text-center">
+          Welcome to
+          <span class="text-blue-600 font-semibold"> अतिथि Tourism </span>
+        </h3>
+      </div>
+       <div class="w-full flex items-center justify-between gap-6 h-full">
+      <img class="justify-center items-center p-6 w-[400px] h-[400px]" src="/img/login.svg" alt="">
+      <div class=" rounded-lg p-6 m-10 bg-gray-800 justify-center w-full">
+        <h1 class="text-2xl font-bold text-gray-200 mb-4">Login</h1>
+        <form class="flex flex-col" action="/users/login" method="post">
+          <input name="email" placeholder="Email" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4" type="email">
+          <input name="password" placeholder="Password" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4" type="password">
+          <div class="flex items-center justify-between flex-wrap">
+            <p class="text-white"> Don't have an account? <a class="text-sm text-blue-500 -200 hover:underline" href="/signup">Sign Up</a></p>
+          </div>
+          <button class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4" type="submit">Login</button>
+        </form>
+        <div class="flex justify-center pt-3">
+          <a href="/owners" class="text-indigo-500 hover:underline font-semibold">Admin Login</a>
+        </div>
+      </div>
+    </div>
+  </section>
+    <% } %>
+  </div>
+  <%- include('partials/footer') %>
+</div>

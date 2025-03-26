@@ -1,0 +1,40 @@
+<%- include('./partials/header') %>
+<% if(error.length>0){ %>
+  <div
+    class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500"
+  >
+    <span class="inline-block mt-1 mb-1 text-white"> <%= error %> </span>
+  </div>
+  <% } %>
+  <div class="absolute inset-0 w-full h-full bg-cover bg-center blur-sm z-[-1]" style="background-image: url('/img/beach-sunset.jpg');"></div>
+<section>
+  <div class="flex items-center justify-between px-[28rem] py-8  md:h-screen lg:py-0">
+    <img class="justify-center items-center p-6 w-[400px] h-[400px]" src="/img/changepass.svg" alt="">
+      <div class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
+          <h2 class="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Change Password
+          </h2>
+          <form action="/users/changePassword" class="mt-4 space-y-4 lg:mt-5 md:space-y-5" method="POST">
+            <div>
+              <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name:</label>
+              <input type="name" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= user.fullname %>" readonly>
+            </div>  
+            <div>
+                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email:</label>
+                  <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= user.email %>" readonly>
+              </div>
+              <div>
+                  <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password:</label>
+                  <input type="password" name="password" id="password" placeholder="Enter Your Password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+              </div>
+              <div>
+                  <label for="confirmpassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password:</label>
+                  <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Re-enter Your Password " class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+              </div>
+              <button type="submit" class="px-5 py-2 w-full rounded mt-6 bg-blue-500 hover:bg-blue-700 text-white mx-auto block">Reset password</button>
+          </form>
+      </div>
+  </div>
+</section>
+<%- include('./partials/footer') %>
+

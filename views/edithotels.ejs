@@ -1,0 +1,45 @@
+<%- include('./partials/header') %>
+
+<div class="min-h-screen flex flex-col">
+    <div class=" bg-slate-100 bg-cover px-10 py-20 flex flex-grow">
+        <%- include('./partials/sidebar') %>
+      <main class="w-5/6 bg-white p-8 shadow ml-4 rounded-md">
+        <h2 class="text-2xl font-bold mb-4">Edit Hotel: <span class="text-blue-500"><%= hotel.name %></span></h2>
+                        <form action="/owners/admin/hotels/<%= hotel._id %>?_method=PUT" method="POST">
+
+                            <div class="mb-6">
+                                <h3 class="text-lg font-semibold mb-2">Hotel Details:</h3>
+                                <div class="grid grid-cols-1 gap-2">
+                                    <label for="name">Hotel Name:</label>
+                                    <input name="name" type="text" id="name" value="<%= hotel.name %>" required class="border p-2 rounded w-full">
+                                    <label for="price">Hotel Price:</label>
+                                    <input name="price" type="text" id="price" value="<%= hotel.price %>" required class="border p-2 rounded w-full">
+                                    <label for="discount">Hotel Discount:</label>
+                                    <input name="discount" type="text" id="discount" value="<%= hotel.discount %>" required class="border p-2 rounded w-full">
+                                    <label for="facilities">Hotel Facilities:</label>
+                                    <input name="facility1" type="text" id="facility1" value="<%= hotel.facility1 %>" required class="border p-2 rounded w-full">
+                                    <input name="facility2" type="text" id="facility2" value="<%= hotel.facility2 %>" required class="border p-2 rounded w-full">
+                                    <input name="facility3" type="text" id="facility3" value="<%= hotel.facility3 %>" required class="border p-2 rounded w-full">
+                                    <label for="popularity">Hotel Ratings:</label>
+                                    <input name="rating" type="text" id="rating" value="<%= hotel.rating %>" required class="border p-2 rounded w-full">
+                                </div>
+                            </div>
+                        
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">Panel Details:</h3>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <label for="bgcolor" class="w-1/4">Background Color:</label>
+                                    <input name="bgcolor" type="text" placeholder="Background Color" class="border p-2 rounded w-full" id="bgcolor" value="<%= hotel.bgcolor %>" required>
+                                    <label for="panelcolor" class="w-1/4">Panel Color:</label>
+                                    <input name="panelcolor" type="text" placeholder="Panel Color" class="border p-2 rounded w-full" id="panelcolor" value="<%= hotel.panelcolor %>" required>
+                                    <label for="textcolor" class="w-1/4">Text Color:</label>
+                                    <input name="textcolor" type="text" placeholder="Text Color" class="border p-2 rounded w-full" id="textcolor" value="<%= hotel.textcolor %>" required>
+                                </div>
+                            </div>
+                        
+                            <button type="submit" class="px-5 py-2 rounded mt-6 bg-blue-500 hover:bg-blue-700 text-white mx-auto block">Save Changes</button>
+                        </form>
+                    </main>
+                </div>
+            </div>
+            <%- include('./partials/footer') %>

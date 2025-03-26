@@ -1,0 +1,58 @@
+<%- include('./partials/header') %>
+
+<% if (success.length > 0) { %>
+  <div class="absolute top-5 left-1/2 -translate-x-1/2 p-3 rounded-md bg-blue-500">
+    <span class="inline-block mt-1 mb-1 text-white"><%- success %></span>
+  </div>
+<% } %>
+<div class="absolute inset-0 w-full h-full bg-cover bg-center blur-sm z-[-1]" style="background-image: url('/img/beach-sunset.jpg');"></div>
+<section class="min-h-screen flex items-center justify-center bg-black bg-opacity-30">
+  <div class="flex rounded-lg p-6 m-10 bg-[#F9F6FE] bg-opacity-40 justify-between gap-6 w-1/2">
+    <form class="space-y-4 bg-gray-800 p-4 rounded-lg w-full flex flex-col" autocomplete="off" action="/reviews/create" method="post">
+      <h4 class="text-2xl font-bold text-gray-200">Write a Review</h4>
+
+      <div class="flex ml-2 items-center">
+        <span class="text-gray-200">Rating:</span>
+        <div class="flex ml-5 flex-row-reverse justify-center items-center gap-2 text-gray-400" id="rating-container">
+          <input type="radio" id="star5" name="rating" value="5" class="hidden" required />
+          <label for="star5" class="text-3xl cursor-pointer">&#9733;</label>
+          
+          <input type="radio" id="star4" name="rating" value="4" class="hidden" />
+          <label for="star4" class="text-3xl cursor-pointer">&#9733;</label>
+          
+          <input type="radio" id="star3" name="rating" value="3" class="hidden" />
+          <label for="star3" class="text-3xl cursor-pointer">&#9733;</label>
+          
+          <input type="radio" id="star2" name="rating" value="2" class="hidden" />
+          <label for="star2" class="text-3xl cursor-pointer">&#9733;</label>
+          
+          <input type="radio" id="star1" name="rating" value="1" class="hidden" />
+          <label for="star1" class="text-3xl cursor-pointer">&#9733;</label>
+        </div>
+      </div>
+      
+      <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Full Name" name="fullname" value="<%= user.fullname %>" readonly />
+      <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="email" placeholder="Email" name="email" value="<%= user.email %>" readonly />
+      <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Trip Name" name="tour" />
+      <textarea name="comments" id="comments" rows="4" placeholder="Enter your review" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" required></textarea>
+      <input class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4" type="submit" value="Submit Review" />
+    </form>
+    <img class="justify-center items-center p-2 w-[400px] h-7/9" src="/img/review.svg" alt="">
+</div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll("#rating-container label");
+    const inputs = document.querySelectorAll("#rating-container input");
+
+    inputs.forEach((input, index) => {
+      input.addEventListener("change", function () {
+        stars.forEach((star, starIndex) => {
+          star.classList.toggle("text-yellow-400", starIndex >= 5 - this.value);
+        });
+      });
+    });
+  });
+</script>
+
