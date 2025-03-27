@@ -4,9 +4,11 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../config/multer-config");
 const bookingModel = require("../models/booking-model");
+const userModel = require("../models/user-model");
+const isLoggedin = require("../middlewares/isLoggedin");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-router.post("/create", upload.single("image"), async function (req, res) {
+router.post("/create", upload.single("image"),isLoggedin, async function (req, res) {
   try {
     let {
       image, // Path or URL of the image
@@ -23,15 +25,9 @@ router.post("/create", upload.single("image"), async function (req, res) {
       upi,
     } = req.body;
 
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: price * 100, // Amount in cents
-    //   currency: "inr",
-    //   payment_method_types: ["card"],
-    //   metadata: { name, tour, hotels },
-    // });
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
+      customer_email: req.user.email,
       line_items: [
         {
           price_data: {
@@ -80,12 +76,14 @@ router.get('/complete', async (req, res) => {
 
   console.log(JSON.stringify(await result))
 
-  res.send('Your payment was successful')
+  
 })
 
 router.get("/payment-success", function (req, res) {
   let error = req.flash("error");
-  res.render("payment-success", { error });
+  let success = req.flash('success');
+  req.flash("success", "Your Booking has been completed successfully.")
+  res.render("payment-success", { error, success });
 });
 
 router.get("/payment-cancel", function (req, res) {

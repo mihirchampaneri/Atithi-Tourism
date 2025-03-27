@@ -33,7 +33,13 @@
       
       <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Full Name" name="fullname" value="<%= user.fullname %>" readonly />
       <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="email" placeholder="Email" name="email" value="<%= user.email %>" readonly />
-      <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Trip Name" name="tour" />
+      <select name="tour" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2">
+        <option value="" disabled selected>Select a Trip</option>
+        <% trips.forEach(trip => { %>
+          <option value="<%= trip.name %>"><%= trip.name %></option>
+        <% }); %>
+      </select>      
+      <!-- <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Trip Name" name="tour" /> -->
       <textarea name="comments" id="comments" rows="4" placeholder="Enter your review" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" required></textarea>
       <input class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4" type="submit" value="Submit Review" />
     </form>

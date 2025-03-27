@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const isLoggedin = require('../middlewares/isLoggedin');
+const tripModel = require("../models/trip-model");
 const{
     registerUser, 
     loginUser,
@@ -27,10 +28,11 @@ router.get("/myaccount", isLoggedin, (req, res) => {
     res.render("myaccount", { user: req.user, error });
   });
 
-router.get("/review", isLoggedin, (req, res) => {
+router.get("/review", isLoggedin, async(req, res) => {
+    const trips = await tripModel.find({}, "name");
     let success = req.flash('success');
     let error = req.flash('error');
-    res.render("review", { user: req.user, error,success });
+    res.render("review", { user: req.user, error,success, trips });
   });
   
 module.exports = router;

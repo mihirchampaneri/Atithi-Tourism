@@ -1,3 +1,10 @@
+<% if(success.length>0){ %>
+  <div
+    class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500"
+  >
+    <span class="inline-block mt-1 mb-1 text-white"> <%- success %> </span>
+  </div>
+  <% } %>
 <%- include('./partials/header') %>
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
   <div class="bg-white p-8 rounded-lg shadow-lg text-center">
