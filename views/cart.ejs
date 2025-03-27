@@ -79,8 +79,8 @@
     </div>
   </div>
 
-  <div class="w-[70%] max-h-auto">
-    <main class="w-full h-[85vh] bg-white p-8 shadow-xl ml-4">
+  <div class="w-[70%] h-auto">
+    <main class="w-full h-full bg-white p-8 shadow-xl ml-4">
       <h2 class="text-3xl font-bold mb-4">
         Book Now:
         <span class="text-[<%= trip.panelcolor %>]"><%= trip.name %></span>
@@ -229,25 +229,18 @@
             />
           </div> -->
 
-          <div id="card-element" class="grid grid-cols-2 gap-4">
+          <!-- <div id="card-element" class="grid gap-4">
             <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+            <input class="border p-2 rounded w-full" type="text" id="cname" name="cardname" placeholder="John More Doe">
             <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <input class="border p-2 rounded w-full" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
             <label for="expmonth">Exp Month</label>
-            <input type="text" id="expmonth" name="expmonth" placeholder="September">
-          
-            <div class="border p-2 rounded w-full">
-              <div class="border p-2 rounded w-full">
-                <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018">
-              </div>
-              <div class="border p-2 rounded w-full">
-                <label for="cvv">CVV</label>
-                <input class="border p-2 rounded w-full" type="text" id="cvv" name="cvv" placeholder="352">
-              </div>
-            </div>
-          </div>
+            <input class="border p-2 rounded w-full" type="text" id="expmonth" name="expmonth" placeholder="September">
+            <label for="expyear">Exp Year</label>
+            <input class="border p-2 rounded w-full" type="text" id="expyear" name="expyear" placeholder="2018">
+            <label for="cvv">CVV</label>
+            <input class="border p-2 rounded w-full" type="text" id="cvv" name="cvv" placeholder="352">
+          </div> -->
 
         </div>
         <input
