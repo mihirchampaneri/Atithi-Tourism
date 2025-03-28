@@ -32,8 +32,32 @@
                                 <td class="py-3 px-6 border-b text-center"><%= review.fullname %></td>                                                                        
                                 <td class="py-3 px-6 border-b text-center"><%= review.email %></td>                                                                        
                                 <td class="py-3 px-6 border-b text-center"><%= review.tour %></td>                                                                        
-                                <td class="py-3 px-6 border-b text-center"><%= review.rating %></td>  
-                                <td class="py-3 px-6 border-b text-center "><%= new Date(review.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) %></td>                                                                                                                                                                    
+                                <td class="py-3 px-6 border-b text-center "><%= new Date(review.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) %></td>    
+                                <head>
+                                  <link
+                                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+                                    rel="stylesheet"
+                                  />
+                                </head>                                                                                                                                                                
+                                <td class="py-3 px-6 border-b text-center">
+                                  <% const maxRating = 5; 
+                                  const fullStars = Math.floor(review.rating); // full stars
+                                   const halfStars = (review.rating % 1) >= 0.5 ? 1 : 0; // half star 
+                                   const emptyStars = maxRating - fullStars - halfStars; // empty stars
+                                  %>
+                                  <div class="flex justify-center">
+                                    <% for (let i = 0; i < fullStars; i++) { %>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <!-- Full star -->
+                                    <% } %> <% if (halfStars) { %>
+                                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                    <!-- Half star -->
+                                    <% } %> <% for (let i = 0; i < emptyStars; i++) { %>
+                                    <i class="far fa-star text-gray-300"></i>
+                                    <!-- Empty star -->
+                                    <% } %>
+                                  </div>
+                                </td>  
                                 <td class="py-3 px-6 border-b text-center"><%= review.comments %></td>                                                                        
                                 <td class="py-3 px-6 border-b text-center" style="justify-items: center;">
                                     <form  id="deleteForm-<%= review._id %>" action="/owners/admin/reviews/<%= review._id %>" method="post">
