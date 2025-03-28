@@ -21,6 +21,7 @@ module.exports.loginOwner = async function (req, res) {
       if (result) {
         let token = generateToken(owner);
         res.cookie("token", token);
+        req.flash("success", "Welcome Admin! " +owner.fullname);
         res.redirect("admin");
       } else {
         req.flash("error", "Invalid Email or Password");

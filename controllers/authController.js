@@ -49,7 +49,7 @@ module.exports.loginUser = async function (req, res) {
       let token = generateToken(user);
       res.cookie("token", token);
       req.session.userId = user._id;
-      req.flash("success", "Welcome Back!");
+      req.flash("success", "Welcome Back! " +user.fullname);
       res.redirect("/shop");
     } else {
       req.flash("error", "Email or Password incorrect");
