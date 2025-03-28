@@ -25,7 +25,6 @@
                             <th class="py-3 px-6 border-b">Tour</th>
                             <th class="py-3 px-6 border-b">Hotel</th>
                             <th class="py-3 px-6 border-b">Price</th>
-                            <th class="py-3 px-6 border-b">UPI ID</th>
                             <th class="py-3 px-6 border-b">Actions</th>
                         </tr>
                     </thead>
@@ -55,8 +54,7 @@
                                 <td class="py-3 px-6 border-b text-center"><%= booking.contact %></td>                                                                                                       
                                 <td class="py-3 px-6 border-b text-center"><%= booking.tour %></td>                                                                        
                                 <td class="py-3 px-6 border-b text-center"><%= booking.hotels %></td>                                                                        
-                                <td class="py-3 px-6 border-b text-center"><%= booking.price %></td>                                                                        
-                                <td class="py-3 px-6 border-b text-center"><%= booking.upi %></td>                                                                        
+                                <td class="py-3 px-6 border-b text-center"><%= booking.price %></td>                                                                       
                                 <td class="py-3 px-6 border-b text-center">
                                     <form id="deleteForm-<%= booking._id %>" action="/owners/admin/bookings/<%= booking._id %>" method="post">
                                         <button class="group relative flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-500 hover:bg-red-600" type="button" onclick="confirmDeletionbooking('<%= booking._id %>')">
