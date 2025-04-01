@@ -64,3 +64,6 @@ temp/
 # Stripe API keys and sensitive data
 stripe.json
 stripe-webhook-secret.txt
+
+#additional
+task.txt
