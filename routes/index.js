@@ -36,7 +36,7 @@ router.get('/trip/:id', async (req, res) => {
     try {
         const tripId = req.params.id;
         const trip = await tripModel.findById(tripId);
-        let hotel = await hotelModel.find();
+        let hotel = await hotelModel.find({city: trip.name});
         
         if (!trip) {
             return res.status(404).send('Trip not found');

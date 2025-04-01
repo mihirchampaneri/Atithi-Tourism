@@ -96,6 +96,12 @@
               class="border p-2 rounded w-full"
               required
             />
+            <select name="city" class="border p-2 rounded w-full">
+              <option value="" disabled selected>Select a City</option>
+              <% trips.forEach(trip => { %>
+                <option value="<%= trip.name %>"><%= trip.name %></option>
+              <% }); %>
+            </select> 
           </div>
         </div>
 

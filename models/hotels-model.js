@@ -21,6 +21,7 @@ const hotelSchema = new mongoose.Schema({
   facility1:String,
   facility2:String,
   facility3:String,
+  city: String
 });
 
 module.exports = mongoose.model("Hotel", hotelSchema);

@@ -137,8 +137,9 @@ router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
 router.get('/admin/hotels',isLoggedin, async function (req, res){
     try {
         let success = req.flash('success');
+        let trip = await tripModel.find();
         let hotel = await hotelModel.find();
-        res.render('adminhotels', { hotel, success });
+        res.render('adminhotels', { hotel, success,trip });
         } catch (error) {
             console.error('Error fetching trips:', error);
             res.status(500).send('Server Error');
@@ -229,9 +230,10 @@ router.get('/admin/trip',isLoggedin, function (req, res){
     res.render("createtrips", {success: success});
 });
 
-router.get('/admin/hotel',isLoggedin, function (req, res){
+router.get('/admin/hotel',isLoggedin,async function (req, res){
     let success = req.flash('success');
-    res.render("createhotels", {success: success});
+    let trip = await tripModel.find();
+    res.render("createhotels", {success: success, trips: trip});
 });
 
 router.get('/admin/reviews',isLoggedin, async function (req, res){
