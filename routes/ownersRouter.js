@@ -40,7 +40,10 @@ router.get('/admin',isLoggedin,async function (req, res){
     const hotelcount = await hotelModel.countDocuments();
     const bookingcount = await bookingModel.countDocuments();
     const reviewcount = await reviewModel.countDocuments();
-    res.render("admindashboard", {success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount});
+
+    const goodReviews = await reviewModel.countDocuments({ rating: { $gte: 4 } }); 
+    const badReviews = await reviewModel.countDocuments({ rating: { $lte: 3 } }); 
+    res.render("admindashboard", {success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount ,goodReviews, badReviews});
 });
 
 router.get('/admin/users',isLoggedin, async function (req, res){
