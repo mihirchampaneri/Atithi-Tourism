@@ -50,9 +50,20 @@
             <h2 class="text-lg font-semibold m-4">Good vs Bad Reviews Analysis</h2>
             <canvas id="reviewChart" style="width: 400px; height: 400px;"></canvas>
           </div>
+          <div class="bg-white mt-6 p-4 rounded-lg shadow">
+            <h2 class="text-lg font-semibold m-4">Tour vs Rating Analysis</h2>
+            <canvas id="myChart" width="400" height="200"></canvas>
+          </div>
         </div>
         
+        <head>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </head>
+        <!-- Tour vs Rating Line Graph -->
+        
+
         <script>
+          // Good vs Bad Reviews Pie Chart
           new Chart(document.getElementById('reviewChart'), {
             type: 'pie',
             data: {
@@ -66,9 +77,32 @@
             options: {
               responsive: false, 
               maintainAspectRatio: false 
-              }
+            }
           });
-        </script>
+          </script>
+<script>
+  new Chart(document.getElementById('myChart'), {
+    type: 'bar',
+    data: {
+      labels: <%- JSON.stringify(tour.map(t => t.tour)) %>, // X-axis: Tour names
+      datasets: [{
+        label: 'Price', // Adjust this label to match what you're charting
+        data: <%- JSON.stringify(tour.map(t => t.rating)) %>, // Y-axis: Tour prices (as an example of ratings)
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        fill: true
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
       </body>
     </main>
   </div>

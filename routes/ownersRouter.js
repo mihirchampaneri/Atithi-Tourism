@@ -35,6 +35,7 @@ router.post('/login', loginOwner);
 
 router.get('/admin',isLoggedin,async function (req, res){
     let success = req.flash('success');
+    let tour = await reviewModel.find();
     const usercount = await userModel.countDocuments();
     const tripcount = await tripModel.countDocuments();
     const hotelcount = await hotelModel.countDocuments();
@@ -43,7 +44,7 @@ router.get('/admin',isLoggedin,async function (req, res){
 
     const goodReviews = await reviewModel.countDocuments({ rating: { $gte: 4 } }); 
     const badReviews = await reviewModel.countDocuments({ rating: { $lte: 3 } }); 
-    res.render("admindashboard", {success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount ,goodReviews, badReviews});
+    res.render("admindashboard", {success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount ,goodReviews, badReviews, tour});
 });
 
 router.get('/admin/users',isLoggedin, async function (req, res){
