@@ -10,8 +10,8 @@
   <div class="bg-slate-100 bg-cover px-10 py-20 flex flex-grow">
     <%- include('./partials/sidebar') %>
     
-    <main class="w-5/6 bg-white p-8 shadow ml-4 rounded-md">
-      <h2 class="text-xl font-bold mb-4">Welcome <span class="text-blue-500">ADMIN</span>!</h2>
+    <main class="w-5/6 bg-gray-800 p-8 shadow ml-4 rounded-md">
+      <h2 class="text-xl font-bold text-white mb-4">Welcome <span class="text-blue-500">ADMIN</span>!</h2>
       
       <div class="flex flex-wrap items-center gap-4">
         <div class="bg-blue-100 hover:bg-blue-200 rounded-lg p-6 w-64">
@@ -45,12 +45,12 @@
       </head>
       
       <body class="bg-gray-50 p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white mt-6 p-4 rounded-lg shadow">
-            <h2 class="text-lg font-semibold m-4">Good vs Bad Reviews Analysis</h2>
-            <canvas id="reviewChart" style="width: 400px; height: 400px;"></canvas>
+        <div class="grid grid-cols-1 mt-4 md:grid-cols-2 gap-6">
+          <div class="bg-white justify-items-center p-2 rounded-lg shadow">
+            <h2 class="text-xl font-semibold m-4">Good vs Bad Reviews Analysis</h2>
+            <canvas id="reviewChart" style="width: 300px; height: 300px;"></canvas>
           </div>
-          <div class="bg-white mt-6 p-4 rounded-lg shadow">
+          <div class="bg-white p-2 rounded-lg shadow">
             <h2 class="text-lg font-semibold m-4">Tour vs Rating Analysis</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
           </div>
@@ -59,13 +59,12 @@
         <head>
           <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         </head>
-        <!-- Tour vs Rating Line Graph -->
         
 
         <script>
           // Good vs Bad Reviews Pie Chart
           new Chart(document.getElementById('reviewChart'), {
-            type: 'pie',
+            type: 'doughnut',
             data: {
               labels: ['Good Reviews', 'Bad Reviews'],
               datasets: [{
@@ -80,17 +79,20 @@
             }
           });
           </script>
+
+
 <script>
   new Chart(document.getElementById('myChart'), {
     type: 'bar',
     data: {
-      labels: <%- JSON.stringify(tour.map(t => t.tour)) %>, // X-axis: Tour names
+      labels: <%- JSON.stringify(tour.map(t => t.tour)) %>,
       datasets: [{
-        label: 'Price', // Adjust this label to match what you're charting
-        data: <%- JSON.stringify(tour.map(t => t.rating)) %>, // Y-axis: Tour prices (as an example of ratings)
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        fill: true
+        label: 'Ratings',
+        data: <%- JSON.stringify(tour.map(t => t.rating)) %>, 
+        borderColor: 'rgba(100, 149, 237)',
+        backgroundColor:'rgba(100,149,237,0.2)',
+        borderWidth: 2,
+        fill: false
       }]
     },
     options: {
