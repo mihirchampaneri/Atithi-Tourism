@@ -18,6 +18,9 @@ const tripSchema = new mongoose.Schema({
     default: Date.now,
   },
   popularity: Number,
+  facility1:String,
+  facility2:String,
+  facility3:String,
 });
 
 module.exports = mongoose.model("Trip", tripSchema);

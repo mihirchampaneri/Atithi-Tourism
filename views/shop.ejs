@@ -125,10 +125,16 @@
                 </svg>
               <% } %>
             </div>
+
+            <div class="absolute flex font-semibold text-sm text-zinc-900 top-[120px] left-[410px]">
+              &bull; <%= trip.facility1 %><br>
+              &bull; <%= trip.facility2 %><br>
+              &bull; <%= trip.facility3 %>
+            </div>
             
           
             <div class="absolute top-[10px] right-0 mr-4 text-right">
-              <span class="text-base font-bold text-gray-800">₹<%= trip.price %></span>
+              <span class="text-xl font-bold text-gray-800">₹<%= trip.price %></span>
             </div>
           
             <div class="absolute top-0 left-0 m-1 w-[375px] h-[190px]  overflow-hidden">
@@ -155,7 +161,7 @@
             </div>
             <div class="right-2 bottom-2 absolute bg-[#636ae8] rounded-md border border-black/0 justify-center items-center inline-flex overflow-hidden">
               <a href="/trip/<%= trip._id %>">
-              <button class="px-3 py-2 border-2 border-white-500 text-white-500 rounded-md hover:bg-blue-200 hover:text-blue-500 focus:outline-none">Book Now</button>
+              <button class="px-3 py-2 border-2 border-white-500 text-white rounded-md hover:bg-blue-200 hover:text-blue-500 focus:outline-none">Book Now</button>
             </a>
             </div>
           </div>
