@@ -26,7 +26,7 @@ pids
 
 # Directory for uploaded files
 uploads/
-public/uploads/
+public/img/
 
 # IDE and editor files
 .idea/
@@ -67,3 +67,4 @@ stripe-webhook-secret.txt
 
 #additional
 task.txt
+img
