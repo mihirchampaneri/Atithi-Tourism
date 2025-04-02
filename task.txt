@@ -1,2 +1,0 @@
-change admin panel to analyse the tour and rating section (Visualization)
-change hotels router to provide hotels by user's selected tour wise
