@@ -26,6 +26,8 @@ pids
 
 # Directory for uploaded files
 uploads/
+img
+img/bg.mp4
 public/img/bg.mp4
 
 
@@ -68,4 +70,4 @@ stripe-webhook-secret.txt
 
 #additional
 task.txt
-img
+img/
