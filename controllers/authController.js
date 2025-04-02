@@ -25,7 +25,7 @@ module.exports.registerUser = async function (req, res) {
           let token = generateToken(user);
           res.cookie("token", token);
           req.session.userId = user._id;
-          req.flash("success", "user created successfully");
+          req.flash("success", `User created successfully! <br> Welcome ${user.fullname} !`);
           res.redirect("/shop");
         }
       });

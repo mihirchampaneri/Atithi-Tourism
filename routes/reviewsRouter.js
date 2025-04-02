@@ -20,7 +20,7 @@ router.post("/create", async function (req, res) {
         rating,
         comments,
       });
-      req.flash("success", "Your review submitted successfully.");
+      req.flash("success", "Thanks for the review.");
       res.redirect("/shop");
     } catch (err) {
       res.status(500).send(err.message);
