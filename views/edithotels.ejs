@@ -9,20 +9,20 @@
 
                             <div class="mb-6">
                                 <h3 class="text-lg font-semibold mb-2">Hotel Details:</h3>
-                                <div class="grid grid-cols-1 gap-2">
-                                    <label for="name">Hotel Name:</label>
+                                <div class="grid grid-cols-1 gap-2 grid-flow-row">
+                                    <label class="font-semibold" for="name">Hotel Name:</label>
                                     <input name="name" type="text" id="name" value="<%= hotel.name %>" required class="border p-2 rounded w-full">
-                                    <label for="price">Hotel Price:</label>
+                                    <label class="font-semibold" for="price">Hotel Price:</label>
                                     <input name="price" type="text" id="price" value="<%= hotel.price %>" required class="border p-2 rounded w-full">
-                                    <label for="discount">Hotel Discount:</label>
+                                    <label class="font-semibold" for="discount">Hotel Discount:</label>
                                     <input name="discount" type="text" id="discount" value="<%= hotel.discount %>" required class="border p-2 rounded w-full">
-                                    <label for="facilities">Hotel Facilities:</label>
+                                    <label class="font-semibold" for="facilities">Hotel Facilities:</label>
                                     <input name="facility1" type="text" id="facility1" value="<%= hotel.facility1 %>" required class="border p-2 rounded w-full">
                                     <input name="facility2" type="text" id="facility2" value="<%= hotel.facility2 %>" required class="border p-2 rounded w-full">
                                     <input name="facility3" type="text" id="facility3" value="<%= hotel.facility3 %>" required class="border p-2 rounded w-full">
-                                    <label for="popularity">Hotel Ratings:</label>
+                                    <label class="font-semibold" for="popularity">Hotel Ratings:</label>
                                     <input name="rating" type="text" id="rating" value="<%= hotel.rating %>" required class="border p-2 rounded w-full">
-                                    <label for="city">City:</label>
+                                    <label class="font-semibold" for="city">City:</label>
                                     <input name="city" type="text" id="city" value="<%= hotel.city %>" required class="border p-2 rounded w-full">
                                 </div>
                             </div>

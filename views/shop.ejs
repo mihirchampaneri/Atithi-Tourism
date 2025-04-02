@@ -7,84 +7,8 @@
 <% } %>
 
 <div class="bg-neutral-100 w-full h-full flex px-10 py-10">
-  <!-- <div
-    class="w-[20%] h-full fixed top-[8rem] left-10 px-4 py-10 overflow-y-auto bg-white"
-  >
-    <div class="flex items-center gap-2">
-      <h3>sort by</h3>
-      <form action="/shop">
-        <select class="border-[1px] px-2 py-1" name="sortby" id="">
-          <option value="popular">Popular</option>
-          <option value="newest">Newest</option>
-        </select>
-      </form>
-    </div>
-    <div class="flex flex-col mt-10">
-      <a class="block w-fit mb-2" href="/shop">All Trips</a>
-      <a class="block w-fit mb-2" href="">New Collection</a>
-      <a class="block w-fit mb-2" href="">Discounted trips</a>
-    </div>
-    <div class="mt-16">
-      <a class="block w-fit mb-2" href="">Filter by :</a>
-      <a class="block w-fit mb-2" href="">Availability</a>
-      <a class="block w-fit mb-2" href="">Discount</a>
-    </div>
-  </div> -->
   <%- include('./partials/sidemenu') %>
-  <!-- Content Section -->
-  <!-- <div
-    class="w-[80%] ml-[20%] h-full overflow-y-auto p-8"
-  >
-  <h2 class="text-3xl top-[2rem] font-bold mb-4">Book Trip Now:</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <% trips.forEach(function(trip){ %>
-    <div class="w-full h-auto hover:shadow-2xl">
-      <div
-        class="w-full h-52 flex items-center justify-center bg-[<%= trip.bgcolor %>] rounded-t-lg overflow-hidden relative group"
-        style="position: relative"
-      >
-        <img
-          class="w-[95%] h-[95%] object-cover hover:scale-105 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
-          src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>"
-          alt=""
-        />
-        
-        <div
-          class="absolute left-[-55px] top-[15px] w-[170px] transform -rotate-45 bg-red-600 text-center text-white font-semibold py-1"
-        >
-          <%= trip.discount %>%* off
-        </div>
-
-        
-        <div
-          class="absolute bottom-0 right-0 bg-red-500 text-white px-2 py-1 text-sm font-extrabold rounded-tl-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
-          <%= trip.popularity %> ⭐
-        </div>
-      </div>
-
-      <div
-        class="flex justify-between bg-[<%= trip.panelcolor %>] items-center px-4 py-4 text-[<%= trip.textcolor %>] rounded-b-lg"
-      >
-        <div>
-          <h3><%= trip.name %></h3>
-          <h4>₹ <%= trip.price %></h4>
-        </div>
-        <a
-          class="w-15 h-7 flex items-center justify-center rounded-full"
-          href="/trip/<%= trip._id %>"
-        >
-          <button
-            class="px-3 py-2 border-2 border-white-500 text-white-500 rounded-md hover:bg-[<%= trip.bgcolor %>] hover:text-blue-500 focus:outline-none"
-          >
-            Book Now
-          </button>
-        </a>
-      </div>
-    </div>
-    <% }) %>
-  </div>
-  </div> -->
+ 
   <div class="p-4 bg-gray-800 h-full mb-8 rounded-lg mt-10 sm:ml-64">
     <div class=" border-2 border-line border-gray-200 rounded-lg h-full w-[85em] dark:border-gray-700 mt-4">
        <div class="mb-4">
@@ -131,30 +55,29 @@
               &bull; <%= trip.facility2 %><br>
               &bull; <%= trip.facility3 %>
             </div>
-            
           
             <div class="absolute top-[10px] right-0 mr-4 text-right">
               <span class="text-xl font-bold text-gray-800">₹<%= trip.price %></span>
             </div>
           
-            <div class="absolute top-0 left-0 m-1 w-[375px] h-[190px]  overflow-hidden">
+            <div class="absolute top-0 left-0 m-1 w-[375px] h-[190px]">
               <img
                 class="absolute top-0 left-0 p-1 w-[300px] h-[185px] rounded-2xl "
                 src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>"
                 alt="Trip Image"
               />
               <img
-                class="absolute top-[3px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300"
+                class="absolute top-[3px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300 transition-transform duration-300 hover:scale-[1.7] overflow-auto"
                 src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>"
                 alt="Trip Image 2"
               />
               <img
-                class="absolute top-[69px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300"
+                class="absolute top-[69px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300 transition-transform duration-300 hover:scale-[1.7]"
                 src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>"
                 alt="Trip Image 3"
               />
               <img
-                class="absolute top-[135px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300"
+                class="absolute top-[135px] left-[322px] w-[50px] h-[50px] transition-transform duration-300 hover:scale-[1.7] rounded-2xl border border-gray-300"
                 src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>"
                 alt="Trip Image 4"
               />

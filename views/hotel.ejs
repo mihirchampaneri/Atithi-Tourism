@@ -13,7 +13,7 @@
        <div class="flex flex-col items-center justify-center w-full h-full pt-4 mb-4 ">
         
       <% hotels.forEach(function(hotel){ %>
-        <div class="relative mb-5 w-4/5 h-[200px] bg-white/80 border-2 border border-grey-200 rounded-lg hover:border-indigo-500 overflow-hidden hover:shadow-md hover:shadow-blue-500/50">
+        <div class="relative mb-5 w-4/5 h-[200px] bg-white/80 border-2 border border-grey-200 rounded-lg hover:border-indigo-500 hover:shadow-md hover:shadow-blue-500/50">
           <div class="absolute top-[22px] left-[409px] font-bold text-2xl text-gray-800">
             <%= hotel.name %>
           </div>
@@ -55,24 +55,24 @@
             <span class="text-base font-bold text-gray-800">₹<%= hotel.price %></span>
           </div>
         
-          <div class="absolute top-0 left-0 m-1 w-[375px] h-[190px]  overflow-hidden">
+          <div class="absolute top-0 left-0 m-1 w-[375px] h-[190px]">
             <img
               class="absolute top-0 left-0 p-1 w-[300px] h-[185px] rounded-2xl "
               src="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
               alt="Trip Image"
             />
             <img
-              class="absolute top-[3px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300"
+              class="absolute top-[3px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300 transition-transform duration-300 hover:scale-[1.7]"
               src="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
               alt="Trip Image 2"
             />
             <img
-              class="absolute top-[69px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300"
+              class="absolute top-[69px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300 transition-transform duration-300 hover:scale-[1.7]"
               src="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
               alt="Trip Image 3"
             />
             <img
-              class="absolute top-[135px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300"
+              class="absolute top-[135px] left-[322px] w-[50px] h-[50px] rounded-2xl border border-gray-300 transition-transform duration-300 hover:scale-[1.7]"
               src="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
               alt="Trip Image 4"
             />
