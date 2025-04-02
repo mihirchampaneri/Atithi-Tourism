@@ -5,12 +5,12 @@ const isLoggedin = require('../middlewares/isLoggedin');
 const tripModel = require('../models/trip-model'); 
 const hotelModel = require('../models/hotels-model'); 
 
-router.get('/', function(req, res){
+router.get('/login', function(req, res){
     let success = req.flash('success');
     let error = req.flash('error');
     res.render('index', { error, showSignup: false, loggedin: false ,success});
 });
-router.get('/home', function(req, res){
+router.get('/', function(req, res){
     let success = req.flash('success');
     let error = req.flash('error');
     res.render('home', { error, showSignup: false, loggedin: false ,success});
