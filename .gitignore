@@ -26,7 +26,8 @@ pids
 
 # Directory for uploaded files
 uploads/
-public/img/
+public/img/bg.mp4
+
 
 # IDE and editor files
 .idea/
