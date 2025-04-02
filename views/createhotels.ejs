@@ -96,7 +96,7 @@
               class="border p-2 rounded w-full"
               required
             />
-            <select name="city" class="border p-2 rounded w-full">
+            <select name="city" class="border p-2 rounded w-full" required>
               <option value="" disabled selected>Select a City</option>
               <% trips.forEach(trip => { %>
                 <option value="<%= trip.name %>"><%= trip.name %></option>
@@ -134,7 +134,7 @@
         <input
           class="px-5 py-2 rounded mt-3 bg-blue-500 text-white hover:bg-blue-700"
           type="submit"
-          value="Create Newhotel"
+          value="Create New Hotel"
         />
       </form>
     </main>
