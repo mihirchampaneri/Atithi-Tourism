@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अतिथि Tourism</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+        <!-- Logo -->
+        <a href="/home" class="text-blue-500 font-bold text-3xl justify-center items-center">अतिथि Tourism</a>
+
+        <!-- Navigation Links -->
+        <nav>
+            <ul class="flex space-x-6 text-gray-700">
+                <li><a href="/home" class="hover:text-blue-500 transition">Home</a></li>
+                <li><a href="#about" class="hover:text-blue-500 transition">About</a></li>
+                <li><a href="#destinations" class="hover:text-blue-500 transition">Destinations</a></li>
+                <li><a href="#contact" class="hover:text-blue-500 transition">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Login & Signup Buttons -->
+        <div class="flex space-x-4">
+            <a href="/" class="px-4 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition">Login</a>
+            <a href="/signup" class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">Sign Up</a>
+        </div>
+    </div>
+</header>
+
+<!-- <%- include('./partials/header') %> -->
+<body class="bg-gray-100">
+    
+    <!-- Hero Section -->
+    <section class="relative h-screen w-full flex items-center justify-start text-white">
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted class="object-cover w-full h-full">
+                <source src="/img/bg.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="relative ml-[15%] z-10 text-left">
+            <h1 class="text-6xl font-bold animate-fadeInUp">Explore The World</h1>
+            <p class="text-lg mt-4 animate-fadeInUp delay-500">Discover new destinations with our exclusive travel plans</p>
+            <a href="/" class="mt-6 inline-block px-6 py-3 bg-blue-500 rounded-full text-white text-lg hover:bg-blue-600 transition duration-300 animate-fadeInUp delay-1000">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Popular Destinations -->
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-semibold text-gray-800 mb-6 animate-fadeInUp">Top Destinations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="relative group overflow-hidden rounded-xl shadow-lg animate-zoomIn">
+                    <img src="/img/destination1.jpg" class="w-full h-64 object-cover transition-transform transform group-hover:scale-110 duration-500" alt="Destination 1">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p class="text-white text-lg font-semibold">Bali, Indonesia</p>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden rounded-xl shadow-lg animate-zoomIn delay-300">
+                    <img src="/img/destination2.jpg" class="w-full h-64 object-cover transition-transform transform group-hover:scale-110 duration-500" alt="Destination 2">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p class="text-white text-lg font-semibold">Swiss Alps, Switzerland</p>
+                    </div>
+                </div>
+                <div class="relative group overflow-hidden rounded-xl shadow-lg animate-zoomIn delay-600">
+                    <img src="/img/destination3.jpg" class="w-full h-64 object-cover transition-transform transform group-hover:scale-110 duration-500" alt="Destination 3">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p class="text-white text-lg font-semibold">Santorini, Greece</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+<section id="about" class="relative py-20 bg-gray-900 text-white overflow-hidden">
+    <div class="absolute inset-0">
+        <video autoplay loop muted class="object-cover w-full h-full opacity-20">
+            <source src="/img/about-vid.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto px-6 md:px-12">
+        <h2 class="text-5xl font-bold text-center mb-12 animate-fadeInUp">About <span class="text-blue-400">अतिथि Tourism</span></h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <!-- Left Side: Image -->
+            <div class="group relative">
+                <img src="/img/img-4.jpg" alt="About Us" class="rounded-xl shadow-lg transition-transform transform group-hover:scale-105 duration-500">
+                <!-- <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-transparent opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-xl"></div> -->
+            </div>
+
+            <!-- Right Side: Content -->
+            <div class="space-y-6 animate-slideInRight">
+                <p class="text-lg leading-relaxed opacity-80">
+                    <span class="text-blue-400 font-semibold">अतिथि Tourism</span> is your gateway to the most breathtaking destinations on Earth. We believe that travel is not just about places—it's about experiences that transform you.
+                </p>
+                <p class="text-lg leading-relaxed opacity-80">
+                    Our team of experts curates the most unique travel itineraries, offering a blend of <span class="text-blue-400 font-semibold">adventure</span>, <span class="text-blue-400 font-semibold">culture</span>, and <span class="text-blue-400 font-semibold">luxury</span>. Whether you're seeking the northern lights in Iceland or a serene retreat in Bali, we bring your dreams to reality.
+                </p>
+                <a href="#contact" class="inline-block px-6 py-3 bg-blue-500 rounded-full text-white text-lg hover:bg-blue-600 transition duration-300">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Us Section -->
+<section id="contact" class="relative py-20 bg-white text-white">
+    <!-- Background Overlay -->
+    <!-- <div class="absolute inset-0 bg-gray-800 opacity-30 z-0"></div> -->
+
+    <!-- Contact Form Container -->
+    <div class="relative max-w-5xl mx-auto px-6 md:px-12 z-10">
+        <h2 class="text-5xl font-bold text-center text-gray-800 mb-12 animate-fadeInUp">Get in <span class="text-blue-400">Touch</span></h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <!-- Left Side: Contact Info -->
+            <div class="space-y-6 text-gray-800 font-semibold animate-slideInLeft">
+                <p class="text-lg leading-relaxed opacity-80">
+                    Have a question? Want to plan your dream trip? Contact us, and our travel experts will assist you!
+                </p>
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-phone text-blue-400 text-xl"></i>
+                    <span class="text-lg">+91 98765 43210</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-envelope text-blue-400 text-xl"></i>
+                    <span class="text-lg">info@atithitourism.com</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-map-marker-alt text-blue-400 text-xl"></i>
+                    <span class="text-lg">Surat, India</span>
+                </div>
+            </div>
+
+            <!-- Right Side: Contact Form -->
+            <div class=" bg-gray-900  backdrop-blur-lg rounded-2xl p-8 shadow-xl animate-slideInRight">
+                <form action="/send-message" method="POST" class="space-y-6">
+                    <div>
+                        <label class="block text-lg font-medium">Your Name</label>
+                        <input type="text" name="name" required
+                            class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div>
+                        <label class="block text-lg font-medium">Your Email</label>
+                        <input type="email" name="email" required
+                            class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div>
+                        <label class="block text-lg font-medium">Message</label>
+                        <textarea name="message" rows="4" required
+                            class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full py-3 bg-blue-500 rounded-lg text-white text-lg font-semibold hover:bg-blue-600 transition duration-300">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 text-center">
+        <p class="text-sm">&copy; <%= new Date().getFullYear() %> अतिथि Tourism. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

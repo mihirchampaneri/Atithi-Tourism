@@ -10,6 +10,11 @@ router.get('/', function(req, res){
     let error = req.flash('error');
     res.render('index', { error, showSignup: false, loggedin: false ,success});
 });
+router.get('/home', function(req, res){
+    let success = req.flash('success');
+    let error = req.flash('error');
+    res.render('home', { error, showSignup: false, loggedin: false ,success});
+});
 router.get('/signup', (req, res) => {
     let success = req.flash('success');
     let error = req.flash('error');
@@ -32,7 +37,7 @@ router.get('/shop', isLoggedin, async function (req, res) {
     }
 });
 
-router.get('/trip/:id', async (req, res) => {
+router.get('/trip/:id',isLoggedin, async (req, res) => {
     try {
         const tripId = req.params.id;
         const trip = await tripModel.findById(tripId);
@@ -48,7 +53,7 @@ router.get('/trip/:id', async (req, res) => {
     }
 });
 
-router.get('/trip/:idd/hotel/:id', async (req, res) => {
+router.get('/trip/:idd/hotel/:id',isLoggedin, async (req, res) => {
     try {
         const tripId = req.params.idd;
         const tripObjectId = new mongoose.Types.ObjectId(tripId);  
