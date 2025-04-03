@@ -1,12 +1,11 @@
 function getRandomLightColor() {
-    const r = Math.floor(Math.random() * 156) + 100; // Light R (100-255)
-    const g = Math.floor(Math.random() * 156) + 100; // Light G (100-255)
-    const b = Math.floor(Math.random() * 156) + 100; // Light B (100-255)
-    return `rgba(${r}, ${g}, ${b}, 1)`; // 0.5 opacity for transparency
+    const r = Math.floor(Math.random() * 156) + 100;
+    const g = Math.floor(Math.random() * 156) + 100;
+    const b = Math.floor(Math.random() * 156) + 100;
+    return `rgba(${r}, ${g}, ${b}, 1)`;
 }
 
 const randomColors = Array.from({ length: 55 }, getRandomLightColor);
-
 
 document.addEventListener("DOMContentLoaded", function () {
     if (typeof window.chartData === "undefined") {
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Tour vs Rating Analysis
     if (Array.isArray(tourData)) {
         const aggregatedTourData = tourData.reduce((acc, curr) => {
             if (!acc[curr.tour]) {
@@ -72,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Hotels Analysis
     if (Array.isArray(fullnameData)) {
         const aggregatedHotelData = fullnameData.reduce((acc, curr) => {
             if (!acc[curr.fullname]) {
