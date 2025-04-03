@@ -83,7 +83,7 @@
 
 <script>
   new Chart(document.getElementById('myChart'), {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: <%- JSON.stringify(tour.map(t => t.tour)) %>,
       datasets: [{
