@@ -1,66 +1,81 @@
-<%- include('./partials/header') %>
-
-<% if (success.length > 0) { %>
-  <div class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-    <span class="inline-block mt-1 mb-1 text-white"><%- success %></span>
-  </div>
+<%- include('./partials/header') %> <% if (success.length > 0) { %>
+<div
+  class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500"
+>
+  <span class="inline-block mt-1 mb-1 text-white"><%- success %></span>
+</div>
 <% } %>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
 
 <div class="min-h-screen flex flex-col">
   <div class="bg-slate-100 bg-cover px-10 py-20 flex flex-grow">
     <%- include('./partials/sidebar') %>
-    
-    <main class="w-5/6 bg-gray-800 p-8 shadow ml-4 rounded-md">
-      <h2 class="text-xl font-bold text-white mb-4">Welcome <span class="text-blue-500">ADMIN</span>!</h2>
-      
+
+    <main class="w-5/6 bg-gray-800 mx-auto p-8 shadow ml-4 rounded-md">
+      <h2 class="text-xl font-bold text-white mb-4">
+        Welcome <span class="text-blue-500">ADMIN</span>!
+      </h2>
+
       <div class="flex flex-wrap items-center gap-4">
         <div class="bg-blue-100 hover:bg-blue-200 rounded-lg p-6 w-64">
           <div class="text-gray-600">Active Users:</div>
           <div class="text-3xl font-bold text-gray-800"><%= usercount %></div>
         </div>
-        
+
         <div class="bg-blue-50 hover:bg-blue-100 rounded-lg p-6 w-64">
           <div class="text-gray-600">Total Trips:</div>
           <div class="text-3xl font-bold text-gray-800"><%= tripcount %></div>
         </div>
-        
+
         <div class="bg-blue-100 hover:bg-blue-200 rounded-lg p-6 w-64">
           <div class="text-gray-600">Total Hotels:</div>
           <div class="text-3xl font-bold text-gray-800"><%= hotelcount %></div>
         </div>
-        
+
         <div class="bg-blue-50 hover:bg-blue-100 rounded-lg p-6 w-64">
           <div class="text-gray-600">Total Bookings:</div>
-          <div class="text-3xl font-bold text-gray-800"><%= bookingcount %></div>
+          <div class="text-3xl font-bold text-gray-800">
+            <%= bookingcount %>
+          </div>
         </div>
-        
+
         <div class="bg-blue-100 hover:bg-blue-200 rounded-lg p-6 w-64">
           <div class="text-gray-600">Total Reviews:</div>
           <div class="text-3xl font-bold text-gray-800"><%= reviewcount %></div>
         </div>
       </div>
-      
-      <head>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      </head>
-      
+
       <body class="bg-gray-50 p-6">
         <div class="grid grid-cols-1 mt-4 md:grid-cols-2 gap-6">
           <div class="bg-white justify-items-center p-2 rounded-lg shadow">
-            <h2 class="text-xl font-semibold m-4">Good vs Bad Reviews Analysis</h2>
-            <canvas id="reviewChart" style="width: 300px; height: 300px;"></canvas>
+            <h2 class="text-xl font-semibold m-4">
+              Good vs Bad Reviews Analysis
+            </h2>
+            <canvas
+              id="reviewChart"
+              style="width: 300px; height: 300px"
+            ></canvas>
           </div>
           <div class="bg-white p-2 rounded-lg shadow">
-            <h2 class="text-xl font-semibold m-4">Tour vs Rating Analysis</h2>
+            <h2 class="text-xl font-semibold m-4">Tour Analysis</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
           </div>
+          <!-- <div class="bg-white w-full p-2 rounded-lg shadow">
+            <h2 class="text-xl font-semibold m-4">Hotels Analysis</h2>
+            <canvas id="Hotel" width="400" height="200"></canvas>
+          </div> -->
+        </div>
+        <div class="bg-white mt-6 p-2 rounded-lg shadow">
+          <h2 class="text-xl font-semibold m-4">Users Analysis</h2>
+          <canvas id="Hotel" width="400" height="100"></canvas>
         </div>
         
-        <head>
-          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        </head>
         
-
+        
+<!-- 
         <script>
           // Good vs Bad Reviews Pie Chart
           new Chart(document.getElementById('reviewChart'), {
@@ -74,36 +89,111 @@
               }]
             },
             options: {
-              responsive: false, 
-              maintainAspectRatio: false 
+              responsive: false,
+              maintainAspectRatio: false
             }
           });
-          </script>
-
+        </script>
 
 <script>
-  new Chart(document.getElementById('myChart'), {
-    type: 'line',
-    data: {
-      labels: <%- JSON.stringify(tour.map(t => t.tour)) %>,
-      datasets: [{
-        label: 'Ratings',
-        data: <%- JSON.stringify(tour.map(t => t.rating)) %>, 
-        borderColor: 'rgba(100, 149, 237)',
-        backgroundColor:'rgba(100,149,237,0.2)',
-        borderWidth: 2,
-        fill: false
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+  // Ensure tour data is correctly formatted and defined
+  const tourData = <%- JSON.stringify(tour) %>;
+
+  // Group and average ratings by tour name
+  const aggregatedTourData = tourData.reduce((acc, curr) => {
+    if (!acc[curr.tour]) {
+      acc[curr.tour] = { sum: 0, count: 0 };
+    }
+    acc[curr.tour].sum += curr.rating;
+    acc[curr.tour].count += 1;
+    return acc;
+  }, {});
+
+  const tourLabels = Object.keys(aggregatedTourData);
+  const avgTourRatings = tourLabels.map(tour => aggregatedTourData[tour].sum / aggregatedTourData[tour].count);
+
+  if (typeof Chart !== "undefined") {
+    new Chart(document.getElementById('myChart'), {
+      type: 'bar',
+      data: {
+        labels: tourLabels,
+        datasets: [{
+          label: 'Average Tour Ratings',
+          data: avgTourRatings,
+          borderColor: 'rgba(100, 149, 237, 1)',
+          backgroundColor: 'rgba(100, 149, 237, 0.4)',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 5
+          }
         }
       }
-    }
-  });
+    });
+  } else {
+    console.error("Chart.js is not loaded.");
+  }
 </script>
+
+<script>
+  const fullname = <%- JSON.stringify(fullname) %>;
+  const aggregatedHotelData = fullname.reduce((acc, curr) => {
+    if (!acc[curr.fullname]) {
+      acc[curr.fullname] = { sum: 0, count: 0 };
+    }
+    acc[curr.fullname].sum += curr.rating;
+    acc[curr.fullname].count += 1;
+    return acc;
+  }, {});
+
+  const hotelLabels = Object.keys(aggregatedHotelData);
+  const avgHotelRatings = hotelLabels.map(fullname => aggregatedHotelData[fullname].sum / aggregatedHotelData[fullname].count);
+
+  if (typeof Chart !== "undefined") {
+    new Chart(document.getElementById('Hotel'), {
+      type: 'line',
+      data: {
+        labels: hotelLabels,
+        datasets: [{
+          label: 'Average Hotel Ratings',
+          data: avgHotelRatings,
+          borderColor: 'rgba(100, 149, 237, 1)',
+          backgroundColor: 'rgba(100, 149, 237, 0.2)',
+          borderWidth: 2,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 5
+          }
+        }
+      }
+    });
+  } else {
+    console.error("Chart.js is not loaded.");
+  }
+</script> -->
+<script>
+  window.chartData = {
+    goodReviews: <%= goodReviews %>,
+    badReviews: <%= badReviews %>,
+    tourData: <%- JSON.stringify(tour) %>,
+    fullnameData: <%- JSON.stringify(fullname) %>
+  };
+</script>
+<script src="/js/chart.js"></script>
+
 
       </body>
     </main>
