@@ -119,7 +119,6 @@ router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
             bgcolor: req.body.bgcolor,
             panelcolor: req.body.panelcolor,
             textcolor: req.body.textcolor
-            // Add other fields as needed
         };
 
         const trip = await tripModel.findByIdAndUpdate(req.params.id, updatedData, { new: true });
@@ -185,7 +184,6 @@ router.put('/admin/hotels/:id', isLoggedin, async (req, res) => {
             bgcolor: req.body.bgcolor,
             panelcolor: req.body.panelcolor,
             textcolor: req.body.textcolor
-            // Add other fields as needed
         };
 
         const hotel = await hotelModel.findByIdAndUpdate(req.params.id, updatedData, { new: true });

@@ -32,7 +32,7 @@ router.post("/create", upload.single("image"), async function (req, res) {
       textcolor,
       popularity,
     });
-    req.flash("success", "Trip created Successfully");
+    req.flash("success", "Trip Added Successfully");
     res.redirect("/owners/admin/trip");
   } catch (err) {
     res.status(500).send(err.message);
