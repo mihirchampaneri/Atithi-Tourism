@@ -47,8 +47,18 @@ A comprehensive travel booking platform that connects travelers with hotel owner
    MONGODB_URI=your_mongodb_uri
    STRIPE_SECRET_KEY=your_stripe_secret_key
    EXPRESS_SESSION_SECRET=your_session_secret
+   EMAIL_USER=your_email_id
+   EMAIL_PASS=your_email_password
+   TWILIO_SID=your_sid
+   TWILIO_AUTH_TOKEN=your_auth_token
+   TWILIO_PHONE=your_number
    ```
-4. Start the server:
+4. Set Env Variable:
+    ```
+    export DEBUG="development:*"
+    export NODE_ENV="development"
+    ```
+5. Start the server:
    ```bash
    npm start
    ```

@@ -66,6 +66,7 @@ stripe.json
 stripe-webhook-secret.txt
 
 #additional
+Readme.txt
 task.txt
 public/img/*.mp4
 
