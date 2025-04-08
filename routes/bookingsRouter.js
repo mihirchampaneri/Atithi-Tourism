@@ -10,76 +10,81 @@ const twilio = require("twilio");
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-router.post("/create", upload.single("image"),isLoggedin, async function (req, res) {
-  try {
-    let {
-      image, // Path or URL of the image
-      name,
-      price,
-      age,
-      person,
-      contact,
-      dob,
-      checkinDate,
-      checkoutDate,
-      tour,
-      hotels,
-      upi,
-    } = req.body;
+router.post(
+  "/create",
+  upload.single("image"),
+  isLoggedin,
+  async function (req, res) {
+    try {
+      let {
+        image, // Path or URL of the image
+        name,
+        price,
+        age,
+        person,
+        contact,
+        dob,
+        checkinDate,
+        checkoutDate,
+        tour,
+        hotels,
+        upi,
+      } = req.body;
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      customer_email: req.user.email,
-      line_items: [
-        {
-          price_data: {
-            currency: "inr",
-            product_data: {
-              name: tour,
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        customer_email: req.user.email,
+        line_items: [
+          {
+            price_data: {
+              currency: "inr",
+              product_data: {
+                name: tour,
+              },
+              unit_amount: parseInt(price) * 100,
             },
-            unit_amount: parseInt(price) * 100,
+            quantity: 1,
           },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: "http://localhost:3000/bookings/payment-success",
-      cancel_url: "http://localhost:3000/bookings/payment-cancel",
-    });
-    res.redirect(session.url);
+        ],
+        mode: "payment",
+        success_url: "http://localhost:3000/bookings/payment-success",
+        cancel_url: "http://localhost:3000/bookings/payment-cancel",
+      });
+      res.redirect(session.url);
 
-    let booking = await bookingModel.create({
-      image: req.file.buffer,
-      name,
-      price,
-      age,
-      person,
-      contact,
-      dob,
-      checkinDate,
-      checkoutDate,
-      tour,
-      hotels,
-      upi,
-    });
-    // res.json({ success: true, clientSecret: paymentIntent.client_secret });
-    // req.flash("success", "Your Booking has been completed successfully.");
-    // res.redirect("/shop");
-  } catch (err) {
-    res.status(500).send(err.message);
+      let booking = await bookingModel.create({
+        image: req.file.buffer,
+        name,
+        price,
+        age,
+        person,
+        contact,
+        dob,
+        checkinDate,
+        checkoutDate,
+        tour,
+        hotels,
+        upi,
+      });
+      // res.json({ success: true, clientSecret: paymentIntent.client_secret });
+      // req.flash("success", "Your Booking has been completed successfully.");
+      // res.redirect("/shop");
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
   }
-});
+);
 
-router.get('/complete', async (req, res) => {
+router.get("/complete", async (req, res) => {
   const result = Promise.all([
-      stripe.checkout.sessions.retrieve(req.query.session_id, { expand: ['payment_intent.payment_method'] }),
-      stripe.checkout.sessions.listLineItems(req.query.session_id)
-  ])
+    stripe.checkout.sessions.retrieve(req.query.session_id, {
+      expand: ["payment_intent.payment_method"],
+    }),
+    stripe.checkout.sessions.listLineItems(req.query.session_id),
+  ]);
 
-  console.log(JSON.stringify(await result))
-
-  
-})
+  console.log(JSON.stringify(await result));
+});
 
 // router.get("/payment-success", function (req, res) {
 //   let error = req.flash("error");
@@ -100,26 +105,40 @@ router.get("/payment-success", async function (req, res) {
 
   try {
     let phone = booking.contact;
+    let phoneno = `+91${phone}`;
 
-// If phone doesn't already start with "+91", add it
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const day = String(date.getDate()).padStart(2, "0"); // Ensure 2 digits
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
 
-  let phoneno = `+91${phone}`;
+    const checkin = formatDate(booking.checkinDate);
+    const checkout = formatDate(booking.checkoutDate);
 
-    const message = await client.messages.create({
-      body: `Hi ${booking.name}, your booking for ${booking.tour} from ${booking.checkinDate} to ${booking.checkoutDate} has been confirmed! Thank you for booking with us.`,
+
+    await client.messages.create({
+      body: `Hi ${booking.name}, your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}. Thank you for booking with us.`,
       from: process.env.TWILIO_PHONE,
-      to: phoneno // Make sure this is in +91... or international format
+      to: phoneno,
     });
+
+    // const message = await client.messages.create({
+    //   body: `Hi ${booking.name}, your booking for ${booking.tour} from ${booking.checkinDate} to ${booking.checkoutDate} has been confirmed! At ${booking.hotels} Thank you for booking with us.`,
+    //   from: process.env.TWILIO_PHONE,
+    //   to: phoneno, // Make sure this is in +91... or international format
+    // });
 
     console.log("SMS sent: ", message.sid);
   } catch (err) {
     console.error("Twilio SMS error:", err.message);
   }
 
-  req.flash("success", "Your Booking has been completed successfully.")
+  req.flash("success", "Your Booking has been completed successfully.");
   res.render("payment-success", { error, success });
 });
-
 
 router.get("/payment-cancel", function (req, res) {
   let error = req.flash("error");
