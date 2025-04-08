@@ -72,7 +72,7 @@ module.exports.changePassword = async function (req, res) {
 
     res.cookie("token", "");
     req.flash('success','Password changed successfully');
-    res.redirect("/");
+    res.redirect("/login");
   } catch (err) {
     console.error(err);
     req.flash("error", "Something went wrong. Try again!");

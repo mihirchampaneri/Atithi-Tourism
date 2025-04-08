@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         label: 'Average Users Ratings',
                         data: avgHotelRatings,
                         borderColor: 'rgba(100, 149, 237, 1)',
-                        backgroundColor:randomColors,
+                        backgroundColor:'rgba(100, 149, 237, 0.4)',
                         borderWidth: 2,
                         fill: false,
                         pointHoverRadius: 12, 

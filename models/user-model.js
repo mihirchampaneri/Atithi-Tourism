@@ -12,10 +12,10 @@ const userSchema = new mongoose.Schema({
   },
   email: String,
   password: String,
-  cart: { type: Array, default: [] },
-  orders: { type: Array, default: [] },
   contact: Number,
   picture: String,
+  otp: String,
+  otpExpires: Date
 });
 
 module.exports = mongoose.model("user", userSchema);
