@@ -120,10 +120,11 @@ router.get("/payment-success", async function (req, res) {
 
 
     await client.messages.create({
-      body: `Hi ${booking.name}, your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}. Thank you for booking with us.`,
+      body: `Hi ${booking.name},<br> your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}.<br> Thank you for booking with us.`,
       from: process.env.TWILIO_PHONE,
       to: phoneno,
     });
+    
 
     // const message = await client.messages.create({
     //   body: `Hi ${booking.name}, your booking for ${booking.tour} from ${booking.checkinDate} to ${booking.checkoutDate} has been confirmed! At ${booking.hotels} Thank you for booking with us.`,
