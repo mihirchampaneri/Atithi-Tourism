@@ -63,127 +63,12 @@
             <h2 class="text-xl font-semibold m-4">Tour Analysis</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
           </div>
-          <!-- <div class="bg-white w-full p-2 rounded-lg shadow">
-            <h2 class="text-xl font-semibold m-4">Hotels Analysis</h2>
-            <canvas id="Hotel" width="400" height="200"></canvas>
-          </div> -->
         </div>
         <div class="bg-white mt-6 p-2 rounded-lg shadow">
           <h2 class="text-xl font-semibold m-4">Users Analysis</h2>
           <canvas id="Hotel" width="400" height="100"></canvas>
         </div>
         
-        
-        
-<!-- 
-        <script>
-          // Good vs Bad Reviews Pie Chart
-          new Chart(document.getElementById('reviewChart'), {
-            type: 'doughnut',
-            data: {
-              labels: ['Good Reviews', 'Bad Reviews'],
-              datasets: [{
-                data: [<%= goodReviews %>, <%= badReviews %>],
-                backgroundColor: ['#6495ED', '#CCCCFF'],
-                hoverOffset: 4
-              }]
-            },
-            options: {
-              responsive: false,
-              maintainAspectRatio: false
-            }
-          });
-        </script>
-
-<script>
-  // Ensure tour data is correctly formatted and defined
-  const tourData = <%- JSON.stringify(tour) %>;
-
-  // Group and average ratings by tour name
-  const aggregatedTourData = tourData.reduce((acc, curr) => {
-    if (!acc[curr.tour]) {
-      acc[curr.tour] = { sum: 0, count: 0 };
-    }
-    acc[curr.tour].sum += curr.rating;
-    acc[curr.tour].count += 1;
-    return acc;
-  }, {});
-
-  const tourLabels = Object.keys(aggregatedTourData);
-  const avgTourRatings = tourLabels.map(tour => aggregatedTourData[tour].sum / aggregatedTourData[tour].count);
-
-  if (typeof Chart !== "undefined") {
-    new Chart(document.getElementById('myChart'), {
-      type: 'bar',
-      data: {
-        labels: tourLabels,
-        datasets: [{
-          label: 'Average Tour Ratings',
-          data: avgTourRatings,
-          borderColor: 'rgba(100, 149, 237, 1)',
-          backgroundColor: 'rgba(100, 149, 237, 0.4)',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            min: 0,
-            max: 5
-          }
-        }
-      }
-    });
-  } else {
-    console.error("Chart.js is not loaded.");
-  }
-</script>
-
-<script>
-  const fullname = <%- JSON.stringify(fullname) %>;
-  const aggregatedHotelData = fullname.reduce((acc, curr) => {
-    if (!acc[curr.fullname]) {
-      acc[curr.fullname] = { sum: 0, count: 0 };
-    }
-    acc[curr.fullname].sum += curr.rating;
-    acc[curr.fullname].count += 1;
-    return acc;
-  }, {});
-
-  const hotelLabels = Object.keys(aggregatedHotelData);
-  const avgHotelRatings = hotelLabels.map(fullname => aggregatedHotelData[fullname].sum / aggregatedHotelData[fullname].count);
-
-  if (typeof Chart !== "undefined") {
-    new Chart(document.getElementById('Hotel'), {
-      type: 'line',
-      data: {
-        labels: hotelLabels,
-        datasets: [{
-          label: 'Average Hotel Ratings',
-          data: avgHotelRatings,
-          borderColor: 'rgba(100, 149, 237, 1)',
-          backgroundColor: 'rgba(100, 149, 237, 0.2)',
-          borderWidth: 2,
-          fill: false
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            min: 0,
-            max: 5
-          }
-        }
-      }
-    });
-  } else {
-    console.error("Chart.js is not loaded.");
-  }
-</script> -->
 <script>
   window.chartData = {
     goodReviews: <%= goodReviews %>,
@@ -192,6 +77,7 @@
     fullnameData: <%- JSON.stringify(fullname) %>
   };
 </script>
+
 <script src="/js/chart.js"></script>
 
 

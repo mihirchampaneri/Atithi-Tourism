@@ -86,12 +86,6 @@ router.get("/complete", async (req, res) => {
   console.log(JSON.stringify(await result));
 });
 
-// router.get("/payment-success", function (req, res) {
-//   let error = req.flash("error");
-//   let success = req.flash('success');
-//   req.flash("success", "Your Booking has been completed successfully.")
-//   res.render("payment-success", { error, success });
-// });
 
 router.get("/payment-success", async function (req, res) {
   let error = req.flash("error");
@@ -124,13 +118,6 @@ router.get("/payment-success", async function (req, res) {
       from: process.env.TWILIO_PHONE,
       to: phoneno,
     });
-    
-
-    // const message = await client.messages.create({
-    //   body: `Hi ${booking.name}, your booking for ${booking.tour} from ${booking.checkinDate} to ${booking.checkoutDate} has been confirmed! At ${booking.hotels} Thank you for booking with us.`,
-    //   from: process.env.TWILIO_PHONE,
-    //   to: phoneno, // Make sure this is in +91... or international format
-    // });
 
     console.log("SMS sent: ", message.sid);
   } catch (err) {
