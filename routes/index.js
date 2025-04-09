@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const isLoggedin = require('../middlewares/isLoggedin');
 const tripModel = require('../models/trip-model'); 
 const hotelModel = require('../models/hotels-model'); 
+const contactusModel = require('../models/contactus-model'); 
 
 router.get('/login', function(req, res){
     let success = req.flash('success');
@@ -73,6 +74,21 @@ router.get('/trip/:idd/hotel/:id',isLoggedin, async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
+    }
+});
+
+router.post('/contactus', async (req, res) => {
+    const { name, email, message } = req.body;
+    let success = req.flash('success');
+    let error= req.flash('error');
+    try {
+        const newContact = new contactusModel({ name, email, message });
+        await newContact.save();
+        req.flash('success',"Message Sent Successfully !");
+        res.render('home',{ success,error })
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
