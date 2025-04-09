@@ -5,6 +5,7 @@ const userModel = require('../models/user-model');
 const tripModel = require('../models/trip-model'); 
 const hotelModel = require('../models/hotels-model'); 
 const bookingModel = require('../models/booking-model'); 
+const contactusModel = require('../models/contactus-model'); 
 const reviewModel = require('../models/review-model'); 
 const isLoggedin = require('../middlewares/isLoggedin');
 const {loginOwner} = require('../controllers/adminauthController');
@@ -82,6 +83,31 @@ router.get('/admin/tours',isLoggedin, async function (req, res){
             console.error('Error fetching trips:', error);
             res.status(500).send('Server Error');
         }
+});
+
+router.get('/admin/contactus',isLoggedin, async function (req, res){
+    try {
+        let success = req.flash('success');
+        let contactus = await contactusModel.find();
+        res.render('admincontactus', { contactus, success });
+        } catch (error) {
+            console.error('Error fetching trips:', error);
+            res.status(500).send('Server Error');
+        }
+});
+
+router.post('/admin/contactus/:id',isLoggedin, async (req, res) => {
+    try {
+        const result = await contactusModel.findByIdAndDelete(req.params.id);
+        if (result) {
+            req.flash("success", "Message deleted successfully");
+            res.redirect("/owners/admin/contactus");
+        } else {
+            res.status(404).send('message not found');
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
 router.post('/admin/tours/:id',isLoggedin, async (req, res) => {

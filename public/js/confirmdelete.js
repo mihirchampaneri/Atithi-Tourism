@@ -65,3 +65,17 @@ function confirmDeletionreview(reviewId) {
       }
   });
 }
+
+function confirmDeletioncontact(contactusId) {
+  swal({
+      title: "Are you sure?",
+      text: "Do you really want to remove this message from the system ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+  }).then((willDelete) => {
+      if (willDelete) {
+          document.getElementById('deleteForm-' + contactusId).submit();
+      }
+  });
+}
