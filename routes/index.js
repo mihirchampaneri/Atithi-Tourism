@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const isLoggedin = require('../middlewares/isLoggedin');
 const tripModel = require('../models/trip-model'); 
 const hotelModel = require('../models/hotels-model'); 
+const reviewModel = require('../models/review-model'); 
 const contactusModel = require('../models/contactus-model'); 
 
 router.get('/login', function(req, res){
@@ -11,11 +12,14 @@ router.get('/login', function(req, res){
     let error = req.flash('error');
     res.render('index', { error, showSignup: false, loggedin: false ,success});
 });
-router.get('/', function(req, res){
+
+router.get('/',async function(req, res){
     let success = req.flash('success');
+    let reviews= await reviewModel.find()
     let error = req.flash('error');
-    res.render('home', { error, showSignup: false, loggedin: false ,success});
+    res.render('home', { error, showSignup: false, loggedin: false ,success, reviews});
 });
+
 router.get('/signup', (req, res) => {
     let success = req.flash('success');
     let error = req.flash('error');
