@@ -29,5 +29,10 @@
     "nodemailer": "^6.10.0",
     "stripe": "^17.7.0",
     "twilio": "^5.5.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.3"
   }
 }

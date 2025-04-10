@@ -86,16 +86,14 @@ router.get("/complete", async (req, res) => {
   console.log(JSON.stringify(await result));
 });
 
-
 router.get("/payment-success", async function (req, res) {
   let error = req.flash("error");
   let success = req.flash("success");
 
-  // Optional: Retrieve session or user if needed
-  const user = await userModel.findById(req.user); // or use req.user
+  const user = await userModel.findById(req.user); 
 
   // You can also fetch last booking if needed
-  const booking = await bookingModel.findOne({}).sort({ _id: -1 }); // Latest booking
+  const booking = await bookingModel.findOne({}).sort({ _id: -1 }); 
 
   try {
     let phone = booking.contact;
@@ -103,8 +101,8 @@ router.get("/payment-success", async function (req, res) {
 
     function formatDate(dateStr) {
       const date = new Date(dateStr);
-      const day = String(date.getDate()).padStart(2, "0"); // Ensure 2 digits
-      const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+      const day = String(date.getDate()).padStart(2, "0"); 
+      const month = String(date.getMonth() + 1).padStart(2, "0"); 
       const year = date.getFullYear();
       return `${day}-${month}-${year}`;
     }
@@ -112,9 +110,8 @@ router.get("/payment-success", async function (req, res) {
     const checkin = formatDate(booking.checkinDate);
     const checkout = formatDate(booking.checkoutDate);
 
-
     await client.messages.create({
-      body: `Hi ${booking.name},<br> your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}.<br> Thank you for booking with us.`,
+      body: `Hi ${booking.name},<br> your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}.<br> Thank you for booking with us.<br> -अतिथि Tourism `,
       from: process.env.TWILIO_PHONE,
       to: phoneno,
     });
