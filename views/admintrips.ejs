@@ -21,6 +21,7 @@
             <tr class="bg-blue-300 text-black">
               <th class="py-3 px-6 border-b">Images</th>
               <th class="py-3 px-6 border-b">Name</th>
+              <th class="py-3 px-6 border-b">Destinations</th>
               <th class="py-3 px-6 border-b">Price</th>
               <th class="py-3 px-6 border-b">Discount</th>
               <th class="py-3 px-6 border-b">Backround Color</th>
@@ -43,6 +44,7 @@
                 </div>
               </td>
               <td class="py-4 px-6 border-b text-center"><%= trip.name %></td>
+              <td class="py-4 px-6 border-b text-center"><%= trip.facility1 %><br><%= trip.facility2 %><br><%= trip.facility3 %></td>
               <td class="py-4 px-6 border-b text-center"><%= trip.price %></td>
               <td class="py-4 px-6 border-b text-center">
                 <%= trip.discount %>

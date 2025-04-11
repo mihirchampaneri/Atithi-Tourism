@@ -140,6 +140,9 @@ router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
     try {
         const updatedData = {
             name: req.body.name,
+            facility1:req.body.facility1,
+            facility2:req.body.facility2,
+            facility3:req.body.facility3,
             price: req.body.price,
             discount: req.body.discount,
             popularity: req.body.popularity,
