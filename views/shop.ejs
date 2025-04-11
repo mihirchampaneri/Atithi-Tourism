@@ -50,10 +50,13 @@
               <% } %>
             </div>
 
-            <div class="absolute flex font-semibold text-sm text-zinc-900 top-[120px] left-[410px]">
-              &bull; <%= trip.facility1 %><br>
+            <div class="absolute flex flex-col font-semibold text-sm text-zinc-900 top-[120px] left-[410px]">
+              <!-- &bull; <%= trip.facility1 %><br>
               &bull; <%= trip.facility2 %><br>
-              &bull; <%= trip.facility3 %>
+              &bull; <%= trip.facility3 %> -->
+              <a href="https://www.google.com/search?q=<%= encodeURIComponent(trip.facility1) %>" target="_blank">&bull;<%= trip.facility1 %></a>
+              <a href="https://www.google.com/search?q=<%= encodeURIComponent(trip.facility2) %>" target="_blank">&bull;<%= trip.facility2 %></a>
+              <a href="https://www.google.com/search?q=<%= encodeURIComponent(trip.facility3) %>" target="_blank">&bull;<%= trip.facility3 %></a>
             </div>
           
             <div class="absolute top-[10px] right-0 mr-4 text-right">
