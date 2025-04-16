@@ -99,4 +99,51 @@ router.get("/review", isLoggedin, async(req, res) => {
     res.redirect("/login");
   });
   
+  // Add to wishlist
+  router.post('/wishlist/:tripId', isLoggedin, async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const tripId = req.params.tripId;
+  
+      const user = await userModel.findById(userId);
+  
+      const index = user.wishlist.indexOf(tripId);
+  
+      if (index === -1) {
+        // Not in wishlist, add it
+        user.wishlist.push(tripId);
+        req.flash('success', 'Trip added to your wishlist!');
+      } else {
+        // Already in wishlist, remove it
+        user.wishlist.splice(index, 1);
+        req.flash('success', 'Trip removed from your wishlist.');
+      }
+  
+      await user.save();
+      res.redirect('/shop');
+    } catch (err) {
+      console.error(err);
+      req.flash('error', 'Something went wrong.');
+      res.redirect('/shop');
+    }
+  });  
+
+  router.get('/wishlist', isLoggedin, async (req, res) => {
+    try {
+      // Get trip IDs from the logged-in user's wishlist
+      const user = await userModel.findById(req.user._id).populate('wishlist');
+  
+      res.render('wishlist', {
+        user: req.user,
+        wishlistTrips: user.wishlist,
+        success: req.flash('success'),
+        error: req.flash('error'),
+      });
+    } catch (err) {
+      console.error(err);
+      req.flash("error", "Something went wrong while loading wishlist");
+      res.redirect('/');
+    }
+  });  
+
 module.exports = router;

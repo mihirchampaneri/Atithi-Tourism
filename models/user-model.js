@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
   contact: Number,
   picture: String,
   otp: String,
-  otpExpires: Date
+  otpExpires: Date,
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trip' }]
 });
 
 module.exports = mongoose.model("user", userSchema);

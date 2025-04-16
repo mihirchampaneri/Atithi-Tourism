@@ -68,5 +68,6 @@ stripe-webhook-secret.txt
 #additional
 Readme.txt
 garbage.txt
+poster.md
 public/img/*.mp4
 

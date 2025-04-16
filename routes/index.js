@@ -6,6 +6,7 @@ const tripModel = require('../models/trip-model');
 const hotelModel = require('../models/hotels-model'); 
 const reviewModel = require('../models/review-model'); 
 const contactusModel = require('../models/contactus-model'); 
+const userModel = require('../models/user-model');
 
 router.get('/login', function(req, res){
     let success = req.flash('success');
@@ -34,8 +35,9 @@ router.get('/owners', function (req, res){
 router.get('/shop', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
+        let user=await userModel.find();
         let trip = await tripModel.find();
-        res.render('shop', { trips : trip, success: success });
+        res.render('shop', { trips : trip, success: success, user:req.user });
     } catch (error) {
         console.error('Error fetching trips:', error);
         res.status(500).send('Server Error');
