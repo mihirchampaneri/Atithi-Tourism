@@ -32,7 +32,7 @@
             </div>
             
           
-            <div class="absolute top-6 right-20  text-right">
+            <div class="absolute top-6 right-8  text-right">
               <span class="text-lg font-bold text-gray-800">₹<%= trip.price %></span>
             </div>
           
@@ -58,14 +58,14 @@
                 alt="Trip Image 4"
               />
             </div>
-            <!-- <form class="right-2 bottom-2 absolute bg-red-500 rounded-md border border-black/0 justify-center items-center inline-flex overflow-hidden" action="users/wishlist/<%= trip._id %>" method="POST">
-                <button type="submit" class="px-3 py-2 border-2 border-white-500 text-white rounded-md hover:bg-blue-200 hover:text-blue-500 focus:outline-none">Remove</button>
-              </form> -->
+            <form class="right-2 bottom-2 absolute bg-red-500 rounded-md border border-black/0 justify-center items-center inline-flex overflow-hidden" action="/users/wishlist/<%= trip._id %>" method="POST">
+                <button type="submit" class="px-3 py-2 border-2 border-white-500 text-white rounded-md hover:bg-red-200 hover:text-blue-500 focus:outline-none">Remove</button>
+              </form>
           </div>
     <% }) %>
   </div>
 <% } else { %>
-  <p class="text-lg ml-4 text-white font-semibold">You haven’t added any trips to your wishlist yet.</p>
+  <p class="text-lg ml-4 text-white"><br> You haven’t added any tours to your wishlist yet.</p>
 <% } %>
 </div>
 </div>

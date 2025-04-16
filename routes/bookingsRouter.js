@@ -110,11 +110,11 @@ router.get("/payment-success", async function (req, res) {
     const checkin = formatDate(booking.checkinDate);
     const checkout = formatDate(booking.checkoutDate);
 
-    await client.messages.create({
-      body: `Hi ${booking.name},<br> your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}.<br> Thank you for booking with us.<br> -अतिथि Tourism `,
+    const message = await client.messages.create({
+      body: `Hi ${booking.name}, your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}. Thank you for booking with us. -अतिथि Tourism`,
       from: process.env.TWILIO_PHONE,
       to: phoneno,
-    });
+    });   
 
     console.log("SMS sent: ", message.sid);
   } catch (err) {
