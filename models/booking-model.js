@@ -14,7 +14,7 @@ const bookingSchema = new mongoose.Schema({
   checkinDate: Date,
   tour: String,
   hotels: String,
-  upi: String,
+  userId:String,
   createdAt: {
     type: Date,
     default: Date.now,

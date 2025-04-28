@@ -19,6 +19,7 @@ router.post(
       let {
         image, // Path or URL of the image
         name,
+        userID,
         price,
         age,
         person,
@@ -33,6 +34,7 @@ router.post(
       let booking = await bookingModel.create({
         image: req.file.buffer,
         name,
+        userId: req.user._id,
         price,
         age,
         person,
@@ -126,6 +128,18 @@ router.get("/payment-success", async function (req, res) {
 router.get("/payment-cancel", function (req, res) {
   let error = req.flash("error");
   res.render("payment-cancel", { error });
+});
+
+router.get('/mybooking', isLoggedin, async (req, res) => {
+  try {
+    let error = req.flash("error");
+    let success = req.flash("success");
+    const bookings = await bookingModel.find({ userId: req.user._id });
+    res.render('mybookings', { bookings,success,error });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Something went wrong');
+  }
 });
 
 module.exports = router;

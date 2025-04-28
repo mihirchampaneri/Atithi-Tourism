@@ -1,42 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Your Bookings</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-    th { background-color: #f2f2f2; }
-  </style>
-</head>
-<body>
-  <h1>Your Bookings</h1>
+<%- include('./partials/header') %>
 
-  <% if (bookings.length > 0) { %>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Destination</th>
-          <th>Hotels</th>
-          <th>Prices</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% bookings.forEach((booking, index) => { %>
-          <tr>
-            <td><%= index + 1 %></td>
-            <td><%= booking.tour %></td>
-            <td><%= booking.hotels %></td>
-            <td><%= booking.price %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>No bookings found.</p>
-  <% } %>
-  
-</body>
-</html>
+<% if(success.length>0){ %>
+    <div class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+        <span class="inline-block mt-1 mb-1 text-white">
+            <%- success %>
+        </span>
+    </div>
+    <% } %> 
+
+    <div class="min-h-auto flex flex-col">
+        <div class=" bg-slate-100 px-10 py-20 h-screen flex flex-grow">
+          <%- include('./partials/sidemenu') %>
+          <main class="w-5/6 bg-white p-8 shadow ml-[300px] rounded-md">
+            <h2 class="text-2xl font-bold mb-4">Your <span class="text-blue-500">Bookings:</span></h2>
+            <div class="w-full h-full overflow-y-auto p-8">
+                <table class="min-w-full table-auto border-collapse border border-gray-300 shadow rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-blue-300 text-black">
+                            <th class="py-3 px-6 border-b">No.</th>
+                            <th class="py-3 px-6 border-b ">Images</th>
+                            <th class="py-3 px-6 border-b">Destination</th>
+                            <th class="py-3 px-6 border-b">Hotel</th>
+                            <th class="py-3 px-6 border-b">Price</th>
+                            <th class="py-3 px-6 border-b">Dates</th>
+                            <th class="py-3 px-6 border-b">person's</th>
+                            <th class="py-3 px-6 border-b">Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% bookings.forEach((booking, index) => { %>
+                            <tr>
+                                <td class="py-4 px-6 border-b text-center"><%= index + 1 %></td>
+                                <td class="py-4 px-6 border-b text-center w-1/8">
+                                    <div class="items-center justify-center">
+                                      <img
+                                        class="h-32 w-40 mx-auto object-cover hover:scale-105 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
+                                        src="data:image/jpeg;base64,<%= booking.image.toString('base64') %>"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </td>
+                                <td class="py-4 px-6 border-b text-center"><%= booking.tour %></td>
+                                <td class="py-4 px-6 border-b text-center"><%= booking.hotels %></td>
+                                <td class="py-4 px-6 border-b text-center">₹<%= booking.price %></td>
+                                <% 
+                                    // Helper function to format the date as DD-MM-YYYY
+                                 function formatDate(date) {
+                                    const d = new Date(date);
+                                    const day = String(d.getDate()).padStart(2, '0'); // Ensure two digits
+                                    const month = String(d.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed, so add 1
+                                    year = d.getFullYear();
+                                    return `${day}-${month}-${year}`;
+                                }
+                                %>
+                                <td class="py-4 px-6 border-b text-center">
+                                    <%= formatDate(booking.checkinDate) %> to <%= formatDate(booking.checkoutDate) %>
+                                </td>
+                                <td class="py-4 px-6 border-b text-center"><%= booking.person %></td>
+                                <td class="py-4 px-6 border-b text-center"><%= booking.contact %></td>                                          
+                                
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+          </main>
+        </div>
+    </div>
+
+<%- include('./partials/footer') %>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="/js/confirmdelete.js"></script>
