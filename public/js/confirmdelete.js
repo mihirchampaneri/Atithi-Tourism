@@ -79,3 +79,17 @@ function confirmDeletioncontact(contactusId) {
       }
   });
 }
+
+// function confirmDeletionmybooking(bookingId) {
+//   swal({
+//       title: "Are you sure?",
+//       text: "Do you really want to remove this booking from the system ?",
+//       icon: "warning",
+//       buttons: true,
+//       dangerMode: true,
+//   }).then((willDelete) => {
+//       if (willDelete) {
+//           document.getElementById('deleteForm-' + bookingId).submit();
+//       }
+//   });
+// }

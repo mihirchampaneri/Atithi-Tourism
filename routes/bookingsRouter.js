@@ -142,4 +142,18 @@ router.get('/mybooking', isLoggedin, async (req, res) => {
   }
 });
 
+router.post('/mybooking/:id',isLoggedin, async (req, res) => {
+  try {
+      const result = await bookingModel.findByIdAndDelete(req.params.id);
+      if (result) {
+          req.flash("success", "Booking deleted successfully");
+          res.redirect("/bookings/mybooking");
+      } else {
+          res.status(404).send('Booking not found');
+      }
+  } catch (error) {
+      res.status(500).send(error);
+  }
+});
+
 module.exports = router;
