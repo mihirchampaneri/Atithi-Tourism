@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Bookings</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h1>Your Bookings</h1>
+
+  <% if (bookings.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Destination</th>
+          <th>Hotels</th>
+          <th>Prices</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bookings.forEach((booking, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= booking.tour %></td>
+            <td><%= booking.hotels %></td>
+            <td><%= booking.price %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No bookings found.</p>
+  <% } %>
+  
+</body>
+</html>

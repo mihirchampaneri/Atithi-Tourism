@@ -28,8 +28,21 @@ router.post(
         checkoutDate,
         tour,
         hotels,
-        upi,
       } = req.body;
+
+      let booking = await bookingModel.create({
+        image: req.file.buffer,
+        name,
+        price,
+        age,
+        person,
+        contact,
+        dob,
+        checkinDate,
+        checkoutDate,
+        tour,
+        hotels,
+      });
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -51,21 +64,6 @@ router.post(
         cancel_url: "http://localhost:3000/bookings/payment-cancel",
       });
       res.redirect(session.url);
-
-      let booking = await bookingModel.create({
-        image: req.file.buffer,
-        name,
-        price,
-        age,
-        person,
-        contact,
-        dob,
-        checkinDate,
-        checkoutDate,
-        tour,
-        hotels,
-        upi,
-      });
       // res.json({ success: true, clientSecret: paymentIntent.client_secret });
       // req.flash("success", "Your Booking has been completed successfully.");
       // res.redirect("/shop");
