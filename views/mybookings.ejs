@@ -29,6 +29,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                      <% if (bookings.length === 0) { %>
+                        <tr>
+                            <td colspan="9" class="py-4 px-6 border-b text-center text-base text-gray-500">
+                                No bookings found.
+                            </td>
+                        </tr>
+                    <% } else { %>
                         <% bookings.forEach((booking, index) => { %>
                             <tr>
                                 <td class="py-4 px-6 border-b text-center"><%= index + 1 %></td>
@@ -130,6 +137,7 @@
                                   </td>
                             </tr>
                         <% }) %>
+                        <% } %>
                     </tbody>
                 </table>
             </div>

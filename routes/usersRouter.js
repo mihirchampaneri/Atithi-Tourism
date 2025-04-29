@@ -13,6 +13,7 @@ const{
     changePassword,
     logout
 } = require('../controllers/authController');
+const bookingModel = require('../models/booking-model');
 
 
 router.get('/', function (req, res){
@@ -33,11 +34,13 @@ router.get("/myaccount", isLoggedin, (req, res) => {
   });
 
 router.get("/review", isLoggedin, async(req, res) => {
-    const trips = await tripModel.find({}, "name");
+    const bookings = await bookingModel.find({userId: req.user._id }, "tour");
     let success = req.flash('success');
     let error = req.flash('error');
-    res.render("review", { user: req.user, error,success, trips });
+    res.render("review", { user: req.user, error,success, bookings });
   });
+
+
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',

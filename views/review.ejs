@@ -35,8 +35,8 @@
       <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="email" placeholder="Email" name="email" value="<%= user.email %>" readonly />
       <select name="tour" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2">
         <option value="" disabled selected>Select a Trip</option>
-        <% trips.forEach(trip => { %>
-          <option value="<%= trip.name %>"><%= trip.name %></option>
+        <% bookings.forEach(booking => { %>
+          <option value="<%= booking.tour %>"><%= booking.tour %></option>
         <% }); %>
       </select>      
       <!-- <input class="bg-gray-700 text-gray-200 border-0 rounded-md p-2" type="text" placeholder="Trip Name" name="tour" /> -->
