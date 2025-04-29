@@ -23,7 +23,7 @@ module.exports = async function (req, res, next) {
     req.user = user || owner;
     req.session.userId = (user || owner)._id; 
     req.session.userRole = user ? "user" : "owner"; 
-
+    res.locals.user = req.user;
     next();
   } catch (err) {
     console.error("JWT Verification Error:", err);

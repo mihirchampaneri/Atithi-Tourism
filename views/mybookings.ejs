@@ -31,7 +31,7 @@
                     <tbody>
                       <% if (bookings.length === 0) { %>
                         <tr>
-                            <td colspan="9" class="py-4 px-6 border-b text-center text-base text-gray-500">
+                            <td colspan="9" class="py-4 px-6 border-b font-semibold text-center text-base text-gray-500">
                                 No bookings found.
                             </td>
                         </tr>
@@ -51,12 +51,11 @@
                                 <td class="py-4 px-6 border-b text-center"><%= booking.tour %></td>
                                 <td class="py-4 px-6 border-b text-center"><%= booking.hotels %></td>
                                 <td class="py-4 px-6 border-b text-center">₹<%= booking.price %></td>
-                                <% 
-                                    // Helper function to format the date as DD-MM-YYYY
+                                <%
                                  function formatDate(date) {
                                     const d = new Date(date);
-                                    const day = String(d.getDate()).padStart(2, '0'); // Ensure two digits
-                                    const month = String(d.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed, so add 1
+                                    const day = String(d.getDate()).padStart(2, '0');
+                                    const month = String(d.getMonth() + 1).padStart(2, '0');
                                     year = d.getFullYear();
                                     return `${day}-${month}-${year}`;
                                 }

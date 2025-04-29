@@ -105,17 +105,17 @@
             <!-- &bull; <%= trip.facility1 %><br>
               &bull; <%= trip.facility2 %><br>
               &bull; <%= trip.facility3 %> -->
-            <a
+            <a class="hover:text-blue-500 hover:underline"
               href="https://www.google.com/search?q=<%= encodeURIComponent(trip.facility1) %>"
               target="_blank"
               >&bull;<%= trip.facility1 %></a
             >
-            <a
+            <a class="hover:text-blue-500 hover:underline"
               href="https://www.google.com/search?q=<%= encodeURIComponent(trip.facility2) %>"
               target="_blank"
               >&bull;<%= trip.facility2 %></a
             >
-            <a
+            <a class="hover:text-blue-500 hover:underline"
               href="https://www.google.com/search?q=<%= encodeURIComponent(trip.facility3) %>"
               target="_blank"
               >&bull;<%= trip.facility3 %></a
@@ -123,9 +123,7 @@
           </div>
 
           <div class="absolute top-[10px] right-0 mr-4 text-right">
-            <span class="text-xl font-bold text-gray-800"
-              >₹<%= trip.price %></span
-            >
+            <span class="text-xl font-bold text-gray-800">₹<%= trip.price %><p class="text-indigo-900 text-sm inline"> /Night</p></span>
           </div>
 
           <div class="absolute top-0 left-0 m-1 w-[375px] h-[190px]">

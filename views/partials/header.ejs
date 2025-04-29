@@ -18,6 +18,21 @@
       <% var loggedin = typeof loggedin !== "undefined" ? loggedin : true %> 
       <% if(loggedin) { %>
       <div class="justify-center items-center flex gap-5">
+        <button
+          class="group flex items-center justify-start w-10 h-10 bg-blue-500/30 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-full active:translate-x-1 active:translate-y-1"
+        >
+          <div
+            class="flex items-center font-black font-sans text-xl text-blue-500 justify-center w-full transition-all duration-700 group-hover:justify-start inline group-hover:opacity-0 group-hover:px-3"
+          >
+          <%= user.fullname.charAt(0).toUpperCase() %>
+          </div>
+          <div
+            class="absolute right-3 transform font-sans font-semibold translate-x-full opacity-0 text-blue-500 text-lg transition-all duration-700 group-hover:translate-x-0 inline group-hover:opacity-100"
+          >
+            <%= user.fullname %>
+          </div>
+        </button>
+              
         <a href="/users/logout">
           <button
           class="group flex items-center justify-start w-9 h-9 bg-red-600 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-full active:translate-x-1 active:translate-y-1"
