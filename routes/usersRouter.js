@@ -65,13 +65,13 @@ router.get("/review", isLoggedin, async(req, res) => {
     await transporter.sendMail({
       to: email,
       subject: 'Your OTP for Password Reset',
-      text: ` Hi [User],<br>
-      We received a request to reset your password.<br>
-      Please use the following One-Time Password (OTP) to proceed:<br>
-      Your OTP is: ${otp}<br>
-      Valid for: 10 minutes<br>
-      Do not share this OTP with anyone for security reasons.<br>
-      Thanks,<br>
+      text: ` Hi User,
+      We received a request to reset your password.
+      Please use the following One-Time Password (OTP) to proceed:
+      Your OTP is: ${otp}
+      Valid for: 10 minutes
+      Do not share this OTP with anyone for security reasons.
+      Thanks,
       अतिथि Tourism`
     });
   

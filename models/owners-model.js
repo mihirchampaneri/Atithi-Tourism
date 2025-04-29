@@ -12,9 +12,7 @@ const ownerSchema = new mongoose.Schema({
   },
   email: String,
   password: String,
-  trips: { type: Array, default: [] },
   picture: String,
-  GSTIN: Number,
 });
 
 module.exports = mongoose.model("owner", ownerSchema);

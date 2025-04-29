@@ -157,6 +157,11 @@
             <input type="hidden" name="hotels" value="<%= hotel.name %>" />
             <input
               type="hidden"
+              name="hotelImage"
+              value="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
+            />
+            <input
+              type="hidden"
               name="price"
               value="<%= trip.price - (trip.price * trip.discount / 100) + hotel.price - (hotel.price * hotel.discount / 100) %>"
             />

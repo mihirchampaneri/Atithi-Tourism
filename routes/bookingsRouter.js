@@ -45,8 +45,8 @@ router.post(
         tour,
         hotels,
       });
-
-      const session = await stripe.checkout.sessions.create({
+      
+      const session = await stripe.checkout.sessions.create({  
         payment_method_types: ["card"],
         customer_email: req.user.email,
         line_items: [
@@ -54,7 +54,8 @@ router.post(
             price_data: {
               currency: "inr",
               product_data: {
-                name: tour,
+                name: `Destination: ${tour}`,
+                description: `Experience the magic of ${tour} while relaxing at the beautiful ${hotels}.`,
               },
               unit_amount: parseInt(price) * 100,
             },
