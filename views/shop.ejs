@@ -14,9 +14,7 @@
       class="border-2 border-line border-gray-200 rounded-lg h-full w-[85em] dark:border-gray-700 mt-4"
     >
       <div class="mb-4">
-        <h2 class="text-3xl text-white top-[2rem] mt-4 ml-[9.5rem] font-bold">
-          Book Trip Now:
-        </h2>
+        <h2 class="text-3xl font-bold text-white top-[2rem] mt-4 ml-[9.5rem] mb-4">Plan Your <span class="text-blue-500">Journey:</span></h2>
       </div>
       <div
         class="flex flex-col items-center justify-center w-full h-full pt-4 mb-4"
@@ -33,7 +31,7 @@
             <form class="inline" action="users/wishlist/<%= trip._id %>" method="POST">
             <button
             type="submit"
-              class="absolute rounded-full ml-1 p-2 <%= isWishlisted ? 'text-red-500' : 'text-indigo-500' %>  hover:bg-red-50 hover:text-red-500 group transition-colors duration-200"
+              class="absolute rounded-full ml-1 p-2 <%= isWishlisted ? 'text-red-500' : 'text-indigo-500' %> <%= isWishlisted ? 'hover:text-indigo-500' : 'hover:text-red-500' %> group transition-colors duration-200"
               aria-label="Add to Wishlist">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,14 +55,19 @@
               <path d="M0 0.5H200" stroke="#6e7b91" />
             </svg>
           </div>
-
-          <div
-            class="absolute top-[65px] left-[409px] text-[11px] text-gray-600 leading-[18px] bg-blue-200 ring-1 ring-blue-800 text-blue-800 text-xs font-medium font-semibold me-2 px-2.5 py-0.5 rounded-full"
-          >
-            <!-- 3 guests • 1 bedroom • 1 bath<br /> -->
-            <%= trip.discount %>% Off
-          </div>
-
+          <% if (trip.discount > 0) { %>
+            <div
+              class="absolute top-[65px] left-[409px] leading-[18px] bg-[#636ae8] text-white font-sans text-xs font-medium font-semibold me-2 px-2.5 py-0.5 rounded-md"
+            >
+              <%= trip.discount %>% Off
+            </div>
+            <% } else { %>
+              <div
+                class="absolute top-[65px] left-[409px] leading-[18px] bg-red-600 text-white text-xs font-medium font-semibold me-2 px-2.5 py-0.5 rounded-md"
+              >
+                New Trip
+              </div>
+            <% } %>
           <div
             class="absolute flex font-semibold text-sm text-gray-800 top-[95px] left-[409px]"
           >

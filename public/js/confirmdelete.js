@@ -53,17 +53,18 @@ function confirmDeletionbooking(bookingId) {
 }
 
 function confirmDeletionmybooking(mybookingId) {
-  swal({
-      title: "Are you sure?",
-      text: "Do you really want to remove your trip booking from the system ?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-  }).then((willDelete) => {
-      if (willDelete) {
-          document.getElementById('deleteForm-' + mybookingId).submit();
-      }
-  });
+    swal({
+        title: "Are you sure?",
+        text: "Do you really want to remove your trip booking from the system?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            const form = document.getElementById(`deleteForm-${mybookingId}`);
+            form.submit(); // This will trigger the form submission to DELETE the booking
+        }
+    });
 }
 
 function confirmDeletionreview(reviewId) {

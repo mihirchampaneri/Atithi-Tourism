@@ -52,8 +52,8 @@ router.get('/admin',isLoggedin,async function (req, res){
 router.get('/admin/users',isLoggedin, async function (req, res){
     try {
         let success = req.flash('success');
-        let user = await userModel.find();
-        res.render('adminusers', { user, success });
+        let users = await userModel.find();
+        res.render('adminusers', { users, success });
         } catch (error) {
             console.error('Error fetching trips:', error);
             res.status(500).send('Server Error');

@@ -9,6 +9,7 @@ const hotelsRouter = require('./routes/hotelsRouter');
 const bookingsRouter = require('./routes/bookingsRouter');
 const reviewsRouter = require('./routes/reviewsRouter');
 const indexRouter = require('./routes/index');
+const methodOverride = require('method-override');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 require('dotenv').config();
@@ -21,6 +22,7 @@ const flash = require('connect-flash');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(expressSession({
     resave: false,
     saveUninitialized: false,

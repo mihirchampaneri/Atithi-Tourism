@@ -87,23 +87,23 @@ router.get("/complete", async (req, res) => {
   console.log(JSON.stringify(await result));
 });
 
-router.get("/payment-success", async function (req, res) {
+const PDFDocument = require("pdfkit");
+
+router.get("/payment-success",isLoggedin, async function (req, res) {
   let error = req.flash("error");
   let success = req.flash("success");
 
   const user = await userModel.findById(req.user); 
-
-  // You can also fetch last booking if needed
-  const booking = await bookingModel.findOne({}).sort({ _id: -1 }); 
+  const booking = await bookingModel.findOne({ userId: req.user._id }).sort({ _id: -1 }); 
 
   try {
-    let phone = booking.contact;
-    let phoneno = `+91${phone}`;
+    // Send confirmation SMS
+    let phoneno = `+91${booking.contact}`;
 
     function formatDate(dateStr) {
       const date = new Date(dateStr);
-      const day = String(date.getDate()).padStart(2, "0"); 
-      const month = String(date.getMonth() + 1).padStart(2, "0"); 
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0");
       const year = date.getFullYear();
       return `${day}-${month}-${year}`;
     }
@@ -111,20 +111,121 @@ router.get("/payment-success", async function (req, res) {
     const checkin = formatDate(booking.checkinDate);
     const checkout = formatDate(booking.checkoutDate);
 
-    const message = await client.messages.create({
+    await client.messages.create({
       body: `Hi ${booking.name}, your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}. Thank you for booking with us. -अतिथि Tourism`,
       from: process.env.TWILIO_PHONE,
       to: phoneno,
-    });   
+    });
 
-    console.log("SMS sent: ", message.sid);
+    req.flash("success", "Your booking is confirmed!");
+    res.render("payment-success", { booking, error, success });
+
   } catch (err) {
-    console.error("Twilio SMS error:", err.message);
+    console.error("Error:", err.message);
+    req.flash("error", "Something went wrong during confirmation.");
+    res.redirect("/bookings/mybooking");
   }
-
-  req.flash("success", "Your Booking has been completed successfully.");
-  res.render("payment-success", { error, success });
 });
+
+router.get("/download-ticket/:id", isLoggedin, async (req, res) => {
+  try {
+    const booking = await bookingModel.findById(req.params.id);
+    if (!booking) {
+      req.flash("error", "Booking not found.");
+      return res.redirect("/bookings/mybooking");
+    }
+
+    const doc = new PDFDocument();
+    res.setHeader("Content-disposition", "attachment; filename=ticket.pdf");
+    res.setHeader("Content-type", "application/pdf");
+    doc.pipe(res);
+
+    // Format dates
+    const formatDate = (dateStr) => {
+      const date = new Date(dateStr);
+      return `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth() + 1).padStart(2, "0")}-${date.getFullYear()}`;
+    };
+
+    const checkin = formatDate(booking.checkinDate);
+    const checkout = formatDate(booking.checkoutDate);
+
+    // Table layout
+    const startX = 50;
+    let y = 150;
+    const boxHeight = 30;
+    const labelWidth = 150;
+    const valueWidth = 350;
+    const lineGap = 10;
+
+    const drawRow = (label, value) => {
+      doc
+        .rect(startX, y, labelWidth, boxHeight).stroke()
+        .rect(startX + labelWidth, y, valueWidth, boxHeight).stroke()
+        .fontSize(12).fillColor('black')
+        .text(label, startX + 10, y + 8)
+        .text(value, startX + labelWidth + 10, y + 8);
+      y += boxHeight + lineGap;
+    };
+
+    doc.fontSize(22).fillColor('#333').text("Atithi Tourism - Booking Ticket", { align: "center" }).moveDown(2);
+    drawRow("Name", booking.name);
+    drawRow("Booking ID", booking._id.toString());
+    drawRow("Trip", booking.tour);
+    drawRow("Hotel", booking.hotels);
+    drawRow("Check-in", checkin);
+    drawRow("Check-out", checkout);
+    drawRow("Persons", booking.person);
+    drawRow("Contact", booking.contact);
+    drawRow("Price", booking.price);
+    doc.moveDown(2).fontSize(10).fillColor("gray").text("Thank you for booking with Atithi Tourism.", { align: "center" });
+
+    doc.end();
+
+  } catch (err) {
+    console.error("PDF Error:", err.message);
+    req.flash("error", "Failed to generate ticket.");
+  }
+});
+
+
+// router.get("/payment-success", async function (req, res) {
+//   let error = req.flash("error");
+//   let success = req.flash("success");
+
+//   const user = await userModel.findById(req.user); 
+
+//   // You can also fetch last booking if needed
+//   const booking = await bookingModel.findOne({}).sort({ _id: -1 }); 
+
+//   try {
+//     let phone = booking.contact;
+//     let phoneno = `+91${phone}`;
+
+//     function formatDate(dateStr) {
+//       const date = new Date(dateStr);
+//       const day = String(date.getDate()).padStart(2, "0"); 
+//       const month = String(date.getMonth() + 1).padStart(2, "0"); 
+//       const year = date.getFullYear();
+//       return `${day}-${month}-${year}`;
+//     }
+
+//     const checkin = formatDate(booking.checkinDate);
+//     const checkout = formatDate(booking.checkoutDate);
+
+//     const message = await client.messages.create({
+//       body: `Hi ${booking.name}, your booking for ${booking.tour} from ${checkin} to ${checkout} has been confirmed! At ${booking.hotels}. Thank you for booking with us. -अतिथि Tourism`,
+//       from: process.env.TWILIO_PHONE,
+//       to: phoneno,
+//     });   
+
+//     console.log("SMS sent: ", message.sid);
+//   } catch (err) {
+//     console.error("Twilio SMS error:", err.message);
+//   }
+
+//   req.flash("success", "Your Booking has been completed successfully.");
+//   res.render("payment-success", { error, success });
+// });
 
 router.get("/payment-cancel", function (req, res) {
   let error = req.flash("error");
@@ -143,17 +244,17 @@ router.get('/mybooking', isLoggedin, async (req, res) => {
   }
 });
 
-router.post('/mybooking/:id',isLoggedin, async (req, res) => {
+router.delete('/mybooking/:id', isLoggedin, async (req, res) => {
   try {
-      const result = await bookingModel.findByIdAndDelete(req.params.id);
-      if (result) {
-          req.flash("success", "Booking deleted successfully");
-          res.redirect("/bookings/mybooking");
-      } else {
-          res.status(404).send('Booking not found');
-      }
+    const result = await bookingModel.findByIdAndDelete(req.params.id);
+    if (result) {
+      req.flash("success", "Booking deleted successfully");
+      res.redirect("/bookings/mybooking");
+    } else {
+      res.status(404).send('Booking not found');
+    }
   } catch (error) {
-      res.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
