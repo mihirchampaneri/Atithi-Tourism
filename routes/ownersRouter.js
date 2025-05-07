@@ -1,29 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const ownerModel = require('../models/owners-model');
-const userModel = require('../models/user-model'); 
-const tripModel = require('../models/trip-model'); 
-const hotelModel = require('../models/hotels-model'); 
-const bookingModel = require('../models/booking-model'); 
-const contactusModel = require('../models/contactus-model'); 
-const reviewModel = require('../models/review-model'); 
+const userModel = require('../models/user-model');
+const tripModel = require('../models/trip-model');
+const hotelModel = require('../models/hotels-model');
+const bookingModel = require('../models/booking-model');
+const contactusModel = require('../models/contactus-model');
+const reviewModel = require('../models/review-model');
 const isLoggedin = require('../middlewares/isLoggedin');
-const {loginOwner} = require('../controllers/adminauthController');
+const { loginOwner } = require('../controllers/adminauthController');
 const methodOverride = require('method-override');
 
 router.use(methodOverride('_method'));
 
-if(process.env.NODE_ENV === "development"){
-    router.post('/create', async function (req, res){
+if (process.env.NODE_ENV === "development") {
+    router.post('/create', async function (req, res) {
         let owners = await ownerModel.find();
-        if(owners.length > 0) {
+        if (owners.length > 0) {
             return res
-            .status(504)
-            .send("You don't have permission to create a new owner");
-        }  
-        
+                .status(504)
+                .send("You don't have permission to create a new owner");
+        }
+
         let { fullname, email, password } = req.body;
-        
+
         let createdOwner = await ownerModel.create({
             fullname,
             email,
@@ -34,7 +34,7 @@ if(process.env.NODE_ENV === "development"){
 }
 router.post('/login', loginOwner);
 
-router.get('/admin',isLoggedin,async function (req, res){
+router.get('/admin', isLoggedin, async function (req, res) {
     let success = req.flash('success');
     let tour = await reviewModel.find();
     let fullname = await reviewModel.find();
@@ -44,23 +44,23 @@ router.get('/admin',isLoggedin,async function (req, res){
     const bookingcount = await bookingModel.countDocuments();
     const reviewcount = await reviewModel.countDocuments();
 
-    const goodReviews = await reviewModel.countDocuments({ rating: { $gte: 4 } }); 
-    const badReviews = await reviewModel.countDocuments({ rating: { $lte: 3 } }); 
-    res.render("admindashboard", {success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount ,goodReviews, badReviews, tour, fullname});
+    const goodReviews = await reviewModel.countDocuments({ rating: { $gte: 4 } });
+    const badReviews = await reviewModel.countDocuments({ rating: { $lte: 3 } });
+    res.render("admindashboard", { success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount, goodReviews, badReviews, tour, fullname });
 });
 
-router.get('/admin/users',isLoggedin, async function (req, res){
+router.get('/admin/users', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
         let users = await userModel.find();
         res.render('adminusers', { users, success });
-        } catch (error) {
-            console.error('Error fetching trips:', error);
-            res.status(500).send('Server Error');
-        }
+    } catch (error) {
+        console.error('Error fetching trips:', error);
+        res.status(500).send('Server Error');
+    }
 });
 
-router.post('/admin/users/:id',isLoggedin, async (req, res) => {
+router.post('/admin/users/:id', isLoggedin, async (req, res) => {
     try {
         const result = await userModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -74,29 +74,29 @@ router.post('/admin/users/:id',isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/tours',isLoggedin, async function (req, res){
+router.get('/admin/tours', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
         let trip = await tripModel.find();
         res.render('admintrips', { trip, success });
-        } catch (error) {
-            console.error('Error fetching trips:', error);
-            res.status(500).send('Server Error');
-        }
+    } catch (error) {
+        console.error('Error fetching trips:', error);
+        res.status(500).send('Server Error');
+    }
 });
 
-router.get('/admin/contactus',isLoggedin, async function (req, res){
+router.get('/admin/contactus', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
         let contactus = await contactusModel.find();
         res.render('admincontactus', { contactus, success });
-        } catch (error) {
-            console.error('Error fetching trips:', error);
-            res.status(500).send('Server Error');
-        }
+    } catch (error) {
+        console.error('Error fetching trips:', error);
+        res.status(500).send('Server Error');
+    }
 });
 
-router.post('/admin/contactus/:id',isLoggedin, async (req, res) => {
+router.post('/admin/contactus/:id', isLoggedin, async (req, res) => {
     try {
         const result = await contactusModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -110,7 +110,7 @@ router.post('/admin/contactus/:id',isLoggedin, async (req, res) => {
     }
 });
 
-router.post('/admin/tours/:id',isLoggedin, async (req, res) => {
+router.post('/admin/tours/:id', isLoggedin, async (req, res) => {
     try {
         const result = await tripModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -140,9 +140,9 @@ router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
     try {
         const updatedData = {
             name: req.body.name,
-            facility1:req.body.facility1,
-            facility2:req.body.facility2,
-            facility3:req.body.facility3,
+            facility1: req.body.facility1,
+            facility2: req.body.facility2,
+            facility3: req.body.facility3,
             price: req.body.price,
             discount: req.body.discount,
             popularity: req.body.popularity,
@@ -163,19 +163,19 @@ router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/hotels',isLoggedin, async function (req, res){
+router.get('/admin/hotels', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
         let trip = await tripModel.find();
         let hotel = await hotelModel.find();
-        res.render('adminhotels', { hotel, success,trip });
-        } catch (error) {
-            console.error('Error fetching trips:', error);
-            res.status(500).send('Server Error');
-        }
+        res.render('adminhotels', { hotel, success, trip });
+    } catch (error) {
+        console.error('Error fetching trips:', error);
+        res.status(500).send('Server Error');
+    }
 });
 
-router.post('/admin/hotels/:id',isLoggedin, async (req, res) => {
+router.post('/admin/hotels/:id', isLoggedin, async (req, res) => {
     try {
         const result = await hotelModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -228,18 +228,18 @@ router.put('/admin/hotels/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/bookings',isLoggedin, async function (req, res){
+router.get('/admin/bookings', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
         let booking = await bookingModel.find();
         res.render('adminbookings', { booking, success });
-        } catch (error) {
-            console.error('Error fetching trips:', error);
-            res.status(500).send('Server Error');
-        }
+    } catch (error) {
+        console.error('Error fetching trips:', error);
+        res.status(500).send('Server Error');
+    }
 });
 
-router.post('/admin/bookings/:id',isLoggedin, async (req, res) => {
+router.post('/admin/bookings/:id', isLoggedin, async (req, res) => {
     try {
         const result = await bookingModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -253,29 +253,29 @@ router.post('/admin/bookings/:id',isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/trip',isLoggedin, function (req, res){
+router.get('/admin/trip', isLoggedin, function (req, res) {
     let success = req.flash('success');
-    res.render("createtrips", {success: success});
+    res.render("createtrips", { success: success });
 });
 
-router.get('/admin/hotel',isLoggedin,async function (req, res){
+router.get('/admin/hotel', isLoggedin, async function (req, res) {
     let success = req.flash('success');
     let trip = await tripModel.find();
-    res.render("createhotels", {success: success, trips: trip});
+    res.render("createhotels", { success: success, trips: trip });
 });
 
-router.get('/admin/reviews',isLoggedin, async function (req, res){
+router.get('/admin/reviews', isLoggedin, async function (req, res) {
     try {
         let success = req.flash('success');
         let review = await reviewModel.find();
         res.render('adminreview', { review, success });
-        } catch (error) {
-            console.error('Error fetching trips:', error);
-            res.status(500).send('Server Error');
-        }
+    } catch (error) {
+        console.error('Error fetching trips:', error);
+        res.status(500).send('Server Error');
+    }
 });
 
-router.post('/admin/reviews/:id',isLoggedin, async (req, res) => {
+router.post('/admin/reviews/:id', isLoggedin, async (req, res) => {
     try {
         const result = await reviewModel.findByIdAndDelete(req.params.id);
         if (result) {

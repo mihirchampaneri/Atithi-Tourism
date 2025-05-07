@@ -8,17 +8,17 @@ const reviewModel = require('../models/review-model');
 const contactusModel = require('../models/contactus-model'); 
 const userModel = require('../models/user-model');
 
-router.get('/login', function(req, res){
-    let success = req.flash('success');
-    let error = req.flash('error');
-    res.render('index', { error, showSignup: false, loggedin: false ,success});
-});
-
 router.get('/',async function(req, res){
     let success = req.flash('success');
     let reviews= await reviewModel.find()
     let error = req.flash('error');
     res.render('home', { error, showSignup: false, loggedin: false ,success, reviews});
+});
+
+router.get('/login', function(req, res){
+    let success = req.flash('success');
+    let error = req.flash('error');
+    res.render('index', { error, showSignup: false, loggedin: false ,success});
 });
 
 router.get('/signup', (req, res) => {
@@ -32,56 +32,109 @@ router.get('/owners', function (req, res){
     res.render('owner-login', { error , loggedin: false });
 });
 
-router.get('/shop', isLoggedin, async function (req, res) {
-    try {
-        let success = req.flash('success');
-        let user=await userModel.find();
-        let trip = await tripModel.find();
-        res.render('shop', { trips : trip, success: success, user:req.user });
-    } catch (error) {
-        console.error('Error fetching trips:', error);
-        res.status(500).send('Server Error');
+router.get('/shop/:tripId?/:hotelId?', isLoggedin, async (req, res) => {
+  const { tripId, hotelId } = req.params;
+  const searchQuery = req.query.q || '';
+  const searchRegex = new RegExp(searchQuery, 'i');
+
+  try {
+    if (!tripId) {
+      const [success, trips] = await Promise.all([
+        req.flash('success'),
+        tripModel.find(searchQuery ? { name: searchRegex } : {}) 
+      ]);
+
+      return res.render('shop', {
+        trips,
+        user: req.user,
+        searchQuery,
+        success
+      });
     }
+
+    if (!mongoose.Types.ObjectId.isValid(tripId)) {
+      return res.status(400).send('Invalid trip ID');
+    }
+
+    const trip = await tripModel.findById(tripId).lean();
+    if (!trip) return res.status(404).send('Trip not found');
+
+    if (!hotelId) {
+      const hotels = await hotelModel.find(
+        { city: trip.name, name: searchRegex }
+      ).lean();
+
+      return res.render('hotel', { hotels, trip, searchQuery });
+    }
+
+
+    if (!mongoose.Types.ObjectId.isValid(hotelId)) {
+      return res.status(400).send('Invalid hotel ID');
+    }
+
+    const hotel = await hotelModel.findById(hotelId).lean();
+    if (!hotel) return res.status(404).send('Hotel not found');
+
+    return res.render('cart', { trip, hotel });
+
+  } catch (error) {
+    console.error('Error in /shop route:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-router.get('/trip/:id',isLoggedin, async (req, res) => {
-    try {
-        const tripId = req.params.id;
-        const trip = await tripModel.findById(tripId);
-        let hotel = await hotelModel.find({city: trip.name});
-        
-        if (!trip) {
-            return res.status(404).send('Trip not found');
-        }
-        res.render('hotel', { hotels : hotel, trip });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-    }
-});
 
-router.get('/trip/:idd/hotel/:id',isLoggedin, async (req, res) => {
-    try {
-        const tripId = req.params.idd;
-        const tripObjectId = new mongoose.Types.ObjectId(tripId);  
+// router.get('/shop/:tripId?/:hotelId?', isLoggedin, async (req, res) => {
+//   const { tripId, hotelId } = req.params;
+//   const searchQuery = req.query.q || '';
 
-        const trip = await tripModel.findById(tripObjectId);  
-        if (!trip) {
-            return res.status(404).send('Trip not found');
-        }
+//   try {
+//     if (!tripId) {
+//       const success = req.flash('success');
+//       const trips = await tripModel.find(
+//         searchQuery
+//           ? { name: { $regex: searchQuery, $options: 'i' } }
+//           : {}
+//       );
 
-        const hotelId = req.params.id;
-        const hotel = await hotelModel.findById(hotelId);
-        if (!hotel) {
-            return res.status(404).send('Hotel not found');
-        }
+//       return res.render('shop', {
+//         trips,
+//         user: req.user,
+//         searchQuery,
+//         success
+//       });
+//     }
 
-        res.render('cart', { trip, hotel });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-    }
-});
+//     if (!mongoose.Types.ObjectId.isValid(tripId)) {
+//       return res.status(400).send('Invalid trip ID');
+//     }
+
+//     const trip = await tripModel.findById(tripId);
+//     if (!trip) return res.status(404).send('Trip not found');
+
+//     if (!hotelId) {
+//       const hotels = await hotelModel.find({
+//         city: trip.name,
+//         name: { $regex: searchQuery, $options: 'i' }
+//       });
+
+//       return res.render('hotel', { hotels, trip, searchQuery });
+//     }
+
+//     if (!mongoose.Types.ObjectId.isValid(hotelId)) {
+//       return res.status(400).send('Invalid hotel ID');
+//     }
+
+//     const hotel = await hotelModel.findById(hotelId);
+//     if (!hotel) return res.status(404).send('Hotel not found');
+
+//     return res.render('cart', { trip, hotel });
+
+//   } catch (error) {
+//     console.error('Error in /shop route:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 router.post('/contactus', async (req, res) => {
     const { name, email, message } = req.body;

@@ -1,108 +1,139 @@
 <%- include('./partials/header') %>
 
-<% if(success.length>0){ %>
-    <div class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-        <span class="inline-block mt-1 mb-1 text-white">
-            <%- success %>
-        </span>
-    </div>
-    <% } %> 
-
-    <div class="min-h-auto flex flex-col">
-        <div class=" bg-slate-100 px-10 py-20 h-screen flex flex-grow">
-          <%- include('./partials/sidemenu') %>
-          <main class="w-5/6 bg-white p-8 shadow ml-[300px] overflow-hidden rounded-md">
-            <h2 class="text-2xl font-bold mb-4">Your <span class="text-blue-500">Bookings:</span></h2>
-            <div class="w-full h-full overflow-y-auto scroll-smooth p-8">
-                <table class="min-w-full table-auto border-collapse border border-gray-300 shadow rounded-lg overflow-hidden">
-                    <thead>
-                        <tr class="bg-blue-300 text-black">
-                            <th class="py-3 px-6 border-b">No.</th>
-                            <th class="py-3 px-6 border-b ">Images</th>
-                            <th class="py-3 px-6 border-b">Destination</th>
-                            <th class="py-3 px-6 border-b">Hotel</th>
-                            <th class="py-3 px-6 border-b">Price</th>
-                            <th class="py-3 px-6 border-b">Dates</th>
-                            <th class="py-3 px-6 border-b">person's</th>
-                            <th class="py-3 px-6 border-b">Contact</th>
-                            <th class="py-3 px-6 border-b">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      <% if (bookings.length === 0) { %>
-                        <tr>
-                            <td colspan="9" class="py-4 px-6 border-b font-semibold text-center text-base text-gray-500">
-                                No bookings found.
-                            </td>
-                        </tr>
-                    <% } else { %>
-                        <% bookings.forEach((booking, index) => { %>
-                            <tr>
-                                <td class="py-4 px-6 border-b text-center"><%= index + 1 %></td>
-                                <td class="py-4 px-6 border-b text-center w-1/8">
-                                    <div class="items-center justify-center">
-                                      <img
-                                        class="h-32 w-40 mx-auto object-cover hover:scale-105 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
-                                        src="data:image/jpeg;base64,<%= booking.image.toString('base64') %>"
-                                        alt=""
-                                      />
-                                    </div>
-                                  </td>
-                                <td class="py-4 px-6 border-b text-center"><%= booking.tour %></td>
-                                <td class="py-4 px-6 border-b text-center"><%= booking.hotels %></td>
-                                <td class="py-4 px-6 border-b text-center">₹<%= booking.price %></td>
-                                <%
-                                 function formatDate(date) {
-                                    const d = new Date(date);
-                                    const day = String(d.getDate()).padStart(2, '0');
-                                    const month = String(d.getMonth() + 1).padStart(2, '0');
-                                    year = d.getFullYear();
-                                    return `${day}-${month}-${year}`;
-                                }
-                                %>
-                                <td class="py-4 px-6 border-b text-center">
-                                    <%= formatDate(booking.checkinDate) %> to <%= formatDate(booking.checkoutDate) %>
-                                </td>
-                                <td class="py-4 px-6 border-b text-center"><%= booking.person %></td>
-                                <td class="py-4 px-6 border-b text-center"><%= booking.contact %></td>                                          
-                                <td class="py-4 px-6 border-b items-center justify-center text-center pl-12">
-                                  <form id="deleteForm-<%= booking._id.toString() %>" action="/bookings/mybooking/<%= booking._id %>?_method=DELETE" method="POST" class="flex justify-center">
-                                      <button
-                                          class="group relative flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-500 hover:bg-red-600"
-                                          type="button"
-                                          onclick="confirmDeletionmybooking('<%= booking._id %>')">
-                                          <svg viewBox="0 0 1.625 1.625" class="absolute -top-7 fill-white delay-100 group-hover:top-4 group-hover:animate-[spin_1.4s] group-hover:duration-1000"
-                                              height="10" width="10">
-                                              <path d="M.471 1.024v-.52a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099h-.39c-.107 0-.195 0-.195-.195"></path>
-                                              <path d="M1.219.601h-.163A.1.1 0 0 1 .959.504V.341A.033.033 0 0 0 .926.309h-.26a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099v-.39a.033.033 0 0 0-.032-.033"></path>
-                                              <path d="m1.245.465-.15-.15a.02.02 0 0 0-.016-.006.023.023 0 0 0-.023.022v.108c0 .036.029.065.065.065h.107a.023.023 0 0 0 .023-.023.02.02 0 0 0-.007-.016"></path>
-                                          </svg>
-                                          <svg width="10" fill="none" viewBox="0 0 39 7" class="origin-right duration-500 group-hover:rotate-90">
-                                              <line stroke-width="4" stroke="white" y2="5" x2="39" y1="5"></line>
-                                              <line stroke-width="3" stroke="white" y2="1.5" x2="26.0357" y1="1.5" x1="12"></line>
-                                          </svg>
-                                          <svg width="10" fill="none" viewBox="0 0 33 39" class="">
-                                              <mask fill="white" id="path-1-inside-1_8_19">
-                                                  <path d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"></path>
-                                              </mask>
-                                              <path mask="url(#path-1-inside-1_8_19)" fill="white" d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"></path>
-                                              <path stroke-width="4" stroke="white" d="M12 6L12 29"></path>
-                                              <path stroke-width="4" stroke="white" d="M21 6V29"></path>
-                                          </svg>
-                                      </button>
-                                  </form>
-                              </td>                              
-                            </tr>
-                        <% }) %>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
-          </main>
+    <% if(success.length>0){ %>
+        <div
+            class="fixed top-6 text-center z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%- success %>
+            </span>
         </div>
-    </div>
+        <% } %>
 
-<%- include('./partials/footer') %>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <div class="min-h-auto flex flex-col">
+                <div class=" bg-neutral-200 px-10 py-20 h-screen flex flex-grow">
+                    <%- include('./partials/sidemenu') %>
+                        <main class="w-5/6 bg-gray-800 p-8 shadow ml-[300px] overflow-hidden rounded-md">
+                            <h2 class="text-3xl font-bold text-white mb-4">Your <span
+                                    class="text-blue-500">Bookings:</span></h2>
+                            <div class="w-full h-full overflow-y-auto scroll-smooth p-8">
+                                <table class="min-w-full table-auto bg-gray-700 rounded-t-xl overflow-hidden">
+                                    <thead>
+                                        <tr class="bg-blue-300 text-black">
+                                            <th class="py-3 px-6 border-b">No.</th>
+                                            <th class="py-3 px-6 border-b ">Images</th>
+                                            <th class="py-3 px-6 border-b">Destination</th>
+                                            <th class="py-3 px-6 border-b">Hotel</th>
+                                            <th class="py-3 px-6 border-b">Price</th>
+                                            <th class="py-3 px-6 border-b">Dates</th>
+                                            <th class="py-3 px-6 border-b">person's</th>
+                                            <th class="py-3 px-6 border-b">Contact</th>
+                                            <th class="py-3 px-6 border-b">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-white">
+                                        <% if (bookings.length===0) { %>
+                                            <tr>
+                                                <td colspan="9"
+                                                    class="py-4 px-6 border-b font-semibold text-center text-base text-gray-500">
+                                                    No bookings found.
+                                                </td>
+                                            </tr>
+                                            <% } else { %>
+                                                <% bookings.forEach((booking, index)=> { %>
+                                                    <tr>
+                                                        <td class="py-4 px-6 border-b text-center">
+                                                            <%= index + 1 %>
+                                                        </td>
+                                                        <td class="py-4 px-6 border-b text-center w-1/8">
+                                                            <div class="items-center justify-center">
+                                                                <img class="h-32 w-40 mx-auto object-cover hover:scale-105 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
+                                                                    src="data:image/jpeg;base64,<%= booking.image.toString('base64') %>"
+                                                                    alt="" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="py-4 px-6 border-b text-center">
+                                                            <%= booking.tour %>
+                                                        </td>
+                                                        <td class="py-4 px-6 border-b text-center">
+                                                            <%= booking.hotels %>
+                                                        </td>
+                                                        <td class="py-4 px-6 border-b text-center">₹<%= booking.price %>
+                                                        </td>
+                                                        <% function formatDate(date) { const d=new Date(date); const
+                                                            day=String(d.getDate()).padStart(2, '0' ); const
+                                                            month=String(d.getMonth() + 1).padStart(2, '0' );
+                                                            year=d.getFullYear(); return `${day}-${month}-${year}`; } %>
+                                                            <td class="py-4 px-6 border-b text-center">
+                                                                <%= formatDate(booking.checkinDate) %> to <%=
+                                                                        formatDate(booking.checkoutDate) %>
+                                                            </td>
+                                                            <td class="py-4 px-6 border-b text-center">
+                                                                <%= booking.person %>
+                                                            </td>
+                                                            <td class="py-4 px-6 border-b text-center">
+                                                                <%= booking.contact %>
+                                                            </td>
+                                                            <td
+                                                                class="py-4 px-6 border-b items-center justify-center text-center pl-12">
+                                                                <form id="deleteForm-<%= booking._id.toString() %>"
+                                                                    action="/bookings/mybooking/<%= booking._id %>?_method=DELETE"
+                                                                    method="POST" class="flex justify-center">
+                                                                    <button
+                                                                        class="group relative flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-500 hover:bg-red-600"
+                                                                        type="button"
+                                                                        onclick="confirmDeletionmybooking('<%= booking._id %>')">
+                                                                        <svg viewBox="0 0 1.625 1.625"
+                                                                            class="absolute -top-7 fill-white delay-100 group-hover:top-4 group-hover:animate-[spin_1.4s] group-hover:duration-1000"
+                                                                            height="10" width="10">
+                                                                            <path
+                                                                                d="M.471 1.024v-.52a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099h-.39c-.107 0-.195 0-.195-.195">
+                                                                            </path>
+                                                                            <path
+                                                                                d="M1.219.601h-.163A.1.1 0 0 1 .959.504V.341A.033.033 0 0 0 .926.309h-.26a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099v-.39a.033.033 0 0 0-.032-.033">
+                                                                            </path>
+                                                                            <path
+                                                                                d="m1.245.465-.15-.15a.02.02 0 0 0-.016-.006.023.023 0 0 0-.023.022v.108c0 .036.029.065.065.065h.107a.023.023 0 0 0 .023-.023.02.02 0 0 0-.007-.016">
+                                                                            </path>
+                                                                        </svg>
+                                                                        <svg width="10" fill="none" viewBox="0 0 39 7"
+                                                                            class="origin-right duration-500 group-hover:rotate-90">
+                                                                            <line stroke-width="4" stroke="white" y2="5"
+                                                                                x2="39" y1="5"></line>
+                                                                            <line stroke-width="3" stroke="white"
+                                                                                y2="1.5" x2="26.0357" y1="1.5" x1="12">
+                                                                            </line>
+                                                                        </svg>
+                                                                        <svg width="10" fill="none" viewBox="0 0 33 39"
+                                                                            class="">
+                                                                            <mask fill="white"
+                                                                                id="path-1-inside-1_8_19">
+                                                                                <path
+                                                                                    d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z">
+                                                                                </path>
+                                                                            </mask>
+                                                                            <path mask="url(#path-1-inside-1_8_19)"
+                                                                                fill="white"
+                                                                                d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z">
+                                                                            </path>
+                                                                            <path stroke-width="4" stroke="white"
+                                                                                d="M12 6L12 29"></path>
+                                                                            <path stroke-width="4" stroke="white"
+                                                                                d="M21 6V29"></path>
+                                                                        </svg>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                    </tr>
+                                                    <% }) %>
+                                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </main>
+                </div>
+            </div>
 
-<script src="/js/confirmdelete.js"></script>
+            <%- include('./partials/footer') %>
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+                <script src="/js/confirmdelete.js"></script>

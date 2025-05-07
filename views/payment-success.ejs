@@ -1,27 +1,26 @@
 <% if(success.length>0){ %>
-  <div
-    class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500"
-  >
+  <div class="fixed top-6 text-center z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
     <span class="inline-block mt-1 mb-1 text-white"> <%- success %> </span>
   </div>
   <% } %>
-<%- include('./partials/header') %>
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-    <div class="text-green-500 mb-4">
-      <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-      </svg>
-    </div>
-    <h1 class="text-2xl font-bold text-gray-800 mb-4">Payment Successful!</h1>
-    <p class="text-gray-600 mb-6">Your booking has been confirmed. Thank you for choosing us!</p>
-    <a href="/shop" class="bg-[#006994] text-white px-6 py-2 rounded hover:bg-[#005a85] transition-colors">
-      Return Home
-    </a>
-    <a href="/bookings/download-ticket/<%= booking._id %>" class="bg-teal-800 text-white px-6 py-2 rounded hover:bg-teal-600 transition-colors ml-4">
-      Get e-Ticket
-    </a>
-    
-  </div>
-</div>
-<%- include('./partials/footer') %>
+    <%- include('./partials/header') %>
+      <div class="min-h-screen flex items-center justify-center bg-gray-100">
+        <div class="bg-neutral-200 p-8 rounded-lg shadow-lg text-center">
+          <div class="text-green-500 mb-4">
+            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-800 mb-4">Payment Successful!</h1>
+          <p class="text-gray-600 mb-6">Your booking has been confirmed. Thank you for choosing us!</p>
+          <a href="/shop" class="bg-[#006994] text-white px-6 py-2 rounded hover:bg-[#005a85] transition-colors">
+            Return Home
+          </a>
+          <a href="/bookings/download-ticket/<%= booking._id %>"
+            class="bg-teal-800 text-white px-6 py-2 rounded hover:bg-teal-600 transition-colors ml-4">
+            Get e-Ticket
+          </a>
+
+        </div>
+      </div>
+      <%- include('./partials/footer') %>

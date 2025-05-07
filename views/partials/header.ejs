@@ -7,8 +7,8 @@
     <link
       rel="icon"
       type="image/png"
-      sizes="32x32"
-      href="/img/travel-bag.png"
+      sizes="40x50"
+      href="/img/icon-plan.png"
     />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
@@ -29,21 +29,56 @@
       <% var loggedin = typeof loggedin !== "undefined" ? loggedin : true %> <%
       if(loggedin) { %>
       <div class="justify-center items-center flex gap-5">
-        <button
-          class="group flex items-center justify-start w-10 h-10 bg-blue-500/30 rounded-full cursor-pointer relative overflow-hidden transition-all duration-300 shadow-lg hover:w-40 hover:rounded-full active:translate-x-1 active:translate-y-1"
-        >
-          <!-- First character -->
-          <div
-            class="flex items-center font-black font-sans text-xl text-blue-500 justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:opacity-0 group-hover:px-3"
+        <div class="relative flex justify-between gap-2">
+          <button
+            id="userToggle"
+            class="group flex items-center justify-start w-10 h-10 bg-blue-500/30 rounded-full cursor-pointer relative overflow-hidden transition-all duration-300 shadow-lg hover:w-40 hover:rounded-full active:translate-x-1 active:translate-y-1"
           >
-            <%= user.fullname.charAt(0).toUpperCase() %>
-          </div>
+            <div
+              class="flex items-center font-black font-sans text-xl text-blue-500 justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:opacity-0 group-hover:px-3"
+            >
+              <%= user.fullname.charAt(0).toUpperCase() %>
+            </div>
+        
+            <div
+              class="absolute whitespace-nowrap left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-sans font-semibold opacity-0 text-blue-500 text-lg transition-all duration-500 group-hover:opacity-100"
+            >
+              <%= user.fullname %>
+            </div>
+          </button>
+          <% if (userRole === 'User') { %>
           <div
-            class="absolute whitespace-nowrap left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-sans font-semibold opacity-0 text-blue-500 text-lg transition-all duration-500 group-hover:opacity-100"
+            id="userMenu"
+            class="absolute top-full mt-2 -left-16 w-40 bg-white border border-gray-200 rounded-md shadow-md opacity-0 pointer-events-none transition-all duration-300 z-50"
           >
-            <%= user.fullname %>
+            <ul class="text-sm text-gray-700">
+              <li><a href="/users/myaccount" class="block px-4 py-2 hover:bg-gray-100">Change Password</a></li>
+              <li><a href="/bookings/mybooking" class="block px-4 py-2 hover:bg-gray-100">My Bookings</a></li>
+              <li><p class="block px-4 py-2 text-gray-500 text-center cursor-none"><%= userRole %></p></li>
+            </ul>
           </div>
-        </button>
+        </div>
+        <% } %>
+
+        <script>
+          const toggleBtn = document.getElementById('userToggle');
+          const userMenu = document.getElementById('userMenu');
+        
+          toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent click bubbling
+            userMenu.classList.toggle('opacity-0');
+            userMenu.classList.toggle('pointer-events-none');
+          });
+        
+          document.addEventListener('click', (e) => {
+            if (!userMenu.classList.contains('opacity-0')) {
+              userMenu.classList.add('opacity-0');
+              userMenu.classList.add('pointer-events-none');
+            }
+          });
+        </script>
+        
+        
 
         <a href="/users/logout">
           <button

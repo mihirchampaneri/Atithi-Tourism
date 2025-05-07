@@ -1,24 +1,31 @@
 <%- include('./partials/header') %>
-<% if(error.length>0){ %>
-    <div class="absolute z-[1] top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
-        <span class="inline-block mt-1 mb-1 text-white">
-            <%= error %>
-        </span>
+  <% if(error.length>0){ %>
+    <div class="fixed top-6 text-center z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+      <span class="inline-block mt-1 mb-1 text-white">
+        <%= error %>
+      </span>
     </div>
     <% } %>
-    
-<div class="flex flex-col items-center justify-center h-screen dark">
-  <div class="absolute inset-0 w-full h-full bg-cover bg-center blur-sm z-[-1]" style="background-image: url('/img/bg.jpg');"></div>
-  <div class="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-    <h2 class="text-2xl font-bold text-gray-200 mb-4">Admin Login</h2>
-    <form class="flex flex-col" action="owners/login" method="post">
-      <input name="email" placeholder="Email" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="email">
-      <input name="password" placeholder="Password" class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="password">
-      <div class="flex items-center justify-between flex-wrap">
-        <!-- <a class="text-sm text-blue-500 hover:underline mb-0.5" href="#">Forgot password?</a> -->
+
+      <div class="flex flex-col items-center justify-center h-screen dark">
+        <div class="absolute inset-0 w-full h-full bg-cover bg-center blur-sm z-[-1]"
+          style="background-image: url('/img/bg.jpg');"></div>
+        <div class="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-gray-200 mb-4">Admin Login</h2>
+          <form class="flex flex-col" action="owners/login" method="post">
+            <input name="email" placeholder="Email"
+              class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+              type="email">
+            <input name="password" placeholder="Password"
+              class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+              type="password">
+            <div class="flex items-center justify-between flex-wrap">
+              <!-- <a class="text-sm text-blue-500 hover:underline mb-0.5" href="#">Forgot password?</a> -->
+            </div>
+            <button
+              class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
+              type="submit">Login</button>
+          </form>
+        </div>
       </div>
-      <button class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit">Login</button>
-    </form>
-  </div>
-</div>
-    <%- include('./partials/footer') %>
+      <%- include('./partials/footer') %>

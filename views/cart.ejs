@@ -1,46 +1,38 @@
 <%- include('./partials/header') %>
-<div class="w-full h-screen flex items-start px-20 py-16 gap-10">
-  <div class="w-[20%] rounded-md overflow-hidden shadow-lg">
-    <div
-      class="h-52 flex items-center justify-center bg-[<%= trip.bgcolor %>] rounded-t-lg"
-      style="position: relative"
-    >
-      <img
-        class="w-[95%] h-[95%] object-cover hover:scale-110 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
-        src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>"
-        alt=""
-      />
-    </div>
-
-    <div
-      class="flex justify-between bg-[<%= trip.panelcolor %>] items-center px-4 py-4 text-[<%= trip.textcolor %>] rounded-b-lg"
-    >
-      <div>
-        <h3><%= trip.name %></h3>
-        <h4>₹ <%= trip.price %></h4>
+  <div class="bg-neutral-200 w-full h-screen flex items-start px-20 py-16 gap-10">
+    <div class="w-[20%] pt-6 rounded-md overflow-hidden shadow-lg">
+      <div class="h-52 flex items-center justify-center bg-[<%= trip.bgcolor %>] rounded-t-lg"
+        style="position: relative">
+        <img
+          class="w-[95%] h-[95%] object-cover hover:scale-110 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
+          src="data:image/jpeg;base64,<%= trip.image.toString('base64') %>" alt="" />
       </div>
-      <div class="w-15 h-7 flex items-center justify-center rounded-full">
-        <button
-          class="px-2 py-1 bg-red-600 text-white-500 rounded-md focus:outline-none"
-        >
-          <%= trip.popularity %> ⭐
-        </button>
+
+      <div
+        class="flex justify-between bg-[<%= trip.panelcolor %>] items-center px-4 py-4 text-[<%= trip.textcolor %>] rounded-b-lg">
+        <div>
+          <h3>
+            <%= trip.name %>
+          </h3>
+          <h4>₹ <%= trip.price %>
+          </h4>
+        </div>
+        <div class="w-15 h-7 flex items-center justify-center rounded-full">
+          <button class="px-2 py-1 bg-red-600 text-white-500 rounded-md focus:outline-none">
+            <%= trip.popularity %> ⭐
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="my-4"></div>
+      <div class="my-4"></div>
 
-    <div
-      class="group h-52 flex items-center justify-center bg-[<%= hotel.bgcolor %>] rounded-lg"
-      style="position: relative"
-    >
-      <img
-        class="w-[95%] h-[95%] object-cover hover:scale-105 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
-        src="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
-        alt=""
-      />
-      <!-- overlay-tag -->
-      <!-- <div class="absolute bottom-0 left-0 right-0 bg-[<%= trip.panelcolor %>] bg-opacity-30 w-full h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:h-full">
+      <div class="group h-52 flex items-center justify-center bg-[<%= hotel.bgcolor %>] rounded-lg"
+        style="position: relative">
+        <img
+          class="w-[95%] h-[95%] object-cover hover:scale-105 hover:transition-all hover:duration-[1s] hover:ease rounded-lg"
+          src="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>" alt="" />
+        <!-- overlay-tag -->
+        <!-- <div class="absolute bottom-0 left-0 right-0 bg-[<%= trip.panelcolor %>] bg-opacity-30 w-full h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:h-full">
         
         <div class="text-[<%= trip.bgcolor %>] backdrop-blur-[2px] p-[5px] rounded-lg text-xl font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
             <li><%= hotel.facility1 %></li>
@@ -48,189 +40,187 @@
             <li><%= hotel.facility3 %></li>
         </div>
     </div> -->
-    </div>
-
-    <div
-      class="flex justify-between bg-[<%= hotel.panelcolor %>] items-center px-4 py-4 text-[<%= hotel.textcolor %>] rounded-b-lg"
-    >
-      <div>
-        <h3><%= hotel.name %>, <%= trip.name %></h3>
-        <h4>₹ <%= hotel.price %></h4>
       </div>
-      <div class="w-15 h-7 flex items-center justify-center rounded-full">
-        <button
-          class="px-2 py-1 bg-red-600 text-white-500 rounded-md focus:outline-none"
-        >
-          <%= hotel.rating %> ⭐
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <div class="w-[70%] h-auto">
-    <main class="w-full h-full bg-white p-8 shadow-xl ml-4">
-      <h2 class="text-3xl font-bold mb-4">
-        Book Now:
-        <span class="text-[<%= trip.panelcolor %>]"><%= trip.name %></span>
-      </h2>
-      <form
-        autocomplete="off"
-        action="/bookings/create"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <div class="mb-6">
-          <h3 class="text-xl font-semibold mb-2">Trip Details</h3>
-          <div class="grid grid-cols-2 gap-4">
-            <input
-              name="name"
-              type="text"
-              placeholder="Enter Your Name"
-              class="border p-2 rounded w-full"
-              required
-            />
-            <input
-              name="age"
-              type="number"
-              min="1"
-              placeholder="Enter Your Age"
-              class="border p-2 rounded w-full"
-              required
-            />
-            <input
-              name="person"
-              type="number"
-              min="1"
-              placeholder="Enter number of tourists"
-              class="border p-2 rounded w-full"
-              required
-            />
-            <input
-              id="contact"
-              name="contact"
-              type="tel"
-              maxlength="10"
-              pattern="[6-9]\d{9}"
-              oninput="validateMobile(this)"
-              placeholder="Enter 10-digit Mobile Number"
-              class="border-2 p-2 rounded w-full focus:outline-none"
-              required
-            />
-            <div class="flex items-center">
-              <label for="fromDate" class="w-[20%]">Check in:</label>
-              <input
-                id="checkinDate"
-                name="checkinDate"
-                type="date"
-                placeholder="Select the start date"
-                class="border p-2 rounded w-[80%]"
-                required
-              />
-            </div>
-
-            <!-- To Date Input -->
-            <div class="flex items-center">
-              <label for="toDate" class="w-[20%]">Check Out:</label>
-              <input
-                id="checkoutDate"
-                name="checkoutDate"
-                type="date"
-                placeholder="Select the end date"
-                class="border p-2 rounded w-[80%]"
-                required
-              />
-            </div>
-
-            <div class="flex items-center">
-              <label for="dob" class="w-[20%]">Date of Birth :</label>
-              <input
-                id="dob"
-                name="dob"
-                type="date"
-                placeholder="Enter the DOB"
-                class="border p-2 rounded w-[80%]"
-                required
-              />
-            </div>
-
-            <input type="hidden" name="tour" value="<%= trip.name %>" />
-            <input type="hidden" name="hotels" value="<%= hotel.name %>" />
-            <input
-              type="hidden"
-              name="hotelImage"
-              value="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>"
-            />
-            <input
-              type="hidden"
-              name="price"
-              value="<%= trip.price - (trip.price * trip.discount / 100) + hotel.price - (hotel.price * hotel.discount / 100) %>"
-            />
-          </div>
-          <div class="m-2">
-            <label class="text-lg font-semibold">Document Upload</label>
-            <input
-              name="image"
-              type="file"
-              class="py-2 px-4 rounded"
-              value="Select File"
-              required
-            />
-          </div>
-        </div>
+      <div
+        class="flex justify-between bg-[<%= hotel.panelcolor %>] items-center px-4 py-4 text-[<%= hotel.textcolor %>] rounded-b-lg">
         <div>
-          <h3 class="text-lg font-semibold mb-2">Payment Details</h3>
-          <div class="px-10 mt-5">
-            <div class="flex mt-2">
-              <h4 class="w-1/3">Trip Price</h4>
-              <h4>₹ <%= trip.price %></h4>
-            </div>
-            <div class="flex mt-2">
-              <h4 class="w-1/3">Trip Discount</h4>
-              <h4><%= trip.discount %>% off</h4>
-            </div>
-            <div class="flex mt-2">
-              <h4 class="w-1/3">Hotel Price</h4>
-              <h4>₹ <%= hotel.price %></h4>
-            </div>
-            <div class="flex mt-2">
-              <h4 class="w-1/3">Hotel Discount</h4>
-              <h4><%= hotel.discount %>% off</h4>
-            </div>
-          </div>
-
-          <div class="w-[60%] h-[1px] bg-black mt-10"></div>
-
-          <div class="flex pb-5 mt-5">
-            <h3 class="w-1/3 text-xl">Total Amount</h3>
-            <h3 class="font-semibold text-xl text-green-600">
-              ₹<%= trip.price - (trip.price * trip.discount / 100) + hotel.price
-              - (hotel.price * hotel.discount / 100) %>
-            </h3>
-          </div>
+          <h3>
+            <%= hotel.name %>, <%= trip.name %>
+          </h3>
+          <h4>₹ <%= hotel.price %>
+          </h4>
         </div>
-        <input
-          class="px-5 py-2 rounded mt-3 bg-blue-500 text-white border-b-solid border-2 hover:bg-blue-600 border-black"
-          type="submit"
-          value="Submit"
-        />
-      </form>
-    </main>
+        <div class="w-15 h-7 flex items-center justify-center rounded-full">
+          <button class="px-2 py-1 bg-red-600 text-white-500 rounded-md focus:outline-none">
+            <%= hotel.rating %> ⭐
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-[70%] h-auto">
+      <main class="w-full h-full bg-slate-100 ring-2 ring-gray-400 mt-2 pb-6 rounded-lg p-8 shadow-xl ml-4">
+        <h2 class="text-3xl font-bold mb-4">
+          Book Now:
+          <span class="text-[<%= trip.panelcolor %>]">
+            <%= trip.name %>
+          </span>
+        </h2>
+        <form autocomplete="off" action="/bookings/create" method="post" enctype="multipart/form-data">
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold mb-2">Trip Details</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <input name="name" type="text" placeholder="Enter Your Name" class="border p-2 rounded w-full" required />
+              <input name="age" type="number" min="1" placeholder="Enter Your Age" class="border p-2 rounded w-full"
+                required />
+              <input name="person" type="number" min="1" placeholder="Enter number of tourists"
+                class="border p-2 rounded w-full" required />
+              <input id="contact" name="contact" type="tel" maxlength="10" pattern="[6-9]\d{9}"
+                oninput="validateMobile(this)" placeholder="Enter 10-digit Mobile Number"
+                class="border-2 p-2 rounded w-full focus:outline-none" required />
+              <span id="mobileError"
+                class="absolute font-semibold top-[13vw] right-[13vw] text-red-500 text-sm mt-1 hidden">Invalid mobile
+                number</span>
+
+              <div class="flex items-center">
+                <label for="fromDate" class="w-[20%]">Check in:</label>
+                <input id="checkinDate" name="checkinDate" type="date" placeholder="Select the start date"
+                  class="border p-2 rounded w-[80%]" required />
+              </div>
+
+              <!-- To Date Input -->
+              <div class="flex items-center">
+                <label for="toDate" class="w-[20%]">Check Out:</label>
+                <input id="checkoutDate" name="checkoutDate" type="date" placeholder="Select the end date"
+                  class="border p-2 rounded w-[80%]" required />
+              </div>
+
+              <div class="flex items-center">
+                <label for="dob" class="w-[20%]">Date of Birth :</label>
+                <input id="dob" name="dob" type="date" placeholder="Enter the DOB" class="border p-2 rounded w-[80%]"
+                  required />
+              </div>
+
+              <input type="hidden" name="tour" value="<%= trip.name %>" />
+              <input type="hidden" name="hotels" value="<%= hotel.name %>" />
+              <input type="hidden" name="hotelImage"
+                value="data:image/jpeg;base64,<%= hotel.image.toString('base64') %>" />
+              <input type="hidden" name="price"
+                value="<%= trip.price - (trip.price * trip.discount / 100) + hotel.price - (hotel.price * hotel.discount / 100) %>" />
+            </div>
+            <div class="m-2 flex gap-4">
+              <label class="text-lg mt-3 font-semibold block">Document Upload</label>
+
+              <!-- Hidden File Input -->
+              <input type="file" name="image" id="fileInput" class="hidden" required onchange="updateFileName()" />
+
+              <!-- Styled Upload Button -->
+              <label
+                class="bg-gray-800 text-center w-48 mt-1.5 rounded-2xl h-10 relative text-white text-base font-semibold group"
+                for="fileInput">
+                <div
+                  class="bg-blue-400 rounded-xl h-8 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="25px" width="25px">
+                    <!-- <path
+                    d="M512 224v640a32 32 0 1 1-64 0V224a32 32 0 0 1 64 0z"
+                    fill="#000000"
+                  ></path> -->
+                    <path
+                      d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"
+                      fill="#000000"></path>
+                  </svg>
+                </div>
+                <p id="fileName" class="translate-x-4 mt-2 truncate">Select File</p>
+              </label>
+            </div>
+
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Payment Details</h3>
+            <div class="px-10 mt-5">
+              <div class="flex mt-2">
+                <h4 class="w-1/3">Trip Price</h4>
+                <h4>₹ <%= trip.price %>
+                </h4>
+              </div>
+              <div class="flex mt-2">
+                <h4 class="w-1/3">Trip Discount</h4>
+                <h4>
+                  <%= trip.discount %>% off
+                </h4>
+              </div>
+              <div class="flex mt-2">
+                <h4 class="w-1/3">Hotel Price</h4>
+                <h4>₹ <%= hotel.price %>
+                </h4>
+              </div>
+              <div class="flex mt-2">
+                <h4 class="w-1/3">Hotel Discount</h4>
+                <h4>
+                  <%= hotel.discount %>% off
+                </h4>
+              </div>
+            </div>
+
+            <div class="w-[60%] h-[1px] bg-black mt-10"></div>
+
+            <div class="flex pb-5 mt-5">
+              <h3 class="w-1/3 text-xl">Total Amount</h3>
+              <h3 class="font-semibold text-xl text-green-600">
+                ₹<%= trip.price - (trip.price * trip.discount / 100) + hotel.price - (hotel.price * hotel.discount /
+                  100) %>
+              </h3>
+            </div>
+          </div>
+          <input
+            class="px-5 py-2 rounded mt-3 bg-blue-500 text-white border-b-solid border-2 hover:bg-blue-600 border-black"
+            type="submit" value="Submit" />
+        </form>
+      </main>
+    </div>
   </div>
-</div>
-<%- include('./partials/footer') %>
+  <%- include('./partials/footer') %>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const checkinDate = document.getElementById("checkinDate");
+        const checkoutDate = document.getElementById("checkoutDate");
 
-<input type="date" id="checkinDate" />
-<input type="date" id="checkoutDate" />
+        if (checkinDate && checkoutDate) {
+          const today = new Date();
+          const tomorrow = new Date(today);
+          tomorrow.setDate(today.getDate() + 1);
+          const minDate = tomorrow.toISOString().split("T")[0];
 
-<script>
-  const checkinDate = document.getElementById("checkinDate");
-  const checkoutDate = document.getElementById("checkoutDate");
+          checkinDate.min = minDate;
+          checkoutDate.min = minDate;
+        }
+      });
 
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  const minDate = tomorrow.toISOString().split("T")[0];
+      function validateMobile(input) {
+        const errorText = document.getElementById("mobileError");
+        const value = input.value;
 
-  checkinDate.min = minDate;
-  checkoutDate.min = minDate;
-</script>
+        const isValid = /^[6-9]\d{9}$/.test(value);
+
+        if (value.length === 10 && !isValid) {
+          errorText.classList.remove("hidden");
+          input.classList.add("border-red-500");
+          input.placeholder = "Invalid phone number";
+        } else {
+          errorText.classList.add("hidden");
+          input.classList.remove("border-red-500");
+          input.placeholder = "Enter 10-digit Mobile Number";
+        }
+      }
+
+      function updateFileName() {
+        const input = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileName');
+        if (input.files.length > 0) {
+          fileNameDisplay.textContent = input.files[0].name;
+        } else {
+          fileNameDisplay.textContent = 'Select File';
+        }
+      }
+    </script>

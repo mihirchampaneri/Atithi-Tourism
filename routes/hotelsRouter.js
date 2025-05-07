@@ -17,7 +17,7 @@ router.post("/create", upload.single("image"), async function (req, res) {
       facility1,
       facility2,
       facility3,
-      city
+      city,
     } = req.body;
     let hotel = await hotelModel.create({
       image: req.file.buffer,
@@ -31,7 +31,7 @@ router.post("/create", upload.single("image"), async function (req, res) {
       facility1,
       facility2,
       facility3,
-      city
+      city,
     });
     req.flash("success", "Hotel created Successfully");
     res.redirect("/owners/admin/hotel");
