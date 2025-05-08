@@ -13,6 +13,7 @@ const ownerSchema = new mongoose.Schema({
   email: String,
   password: String,
   picture: String,
+  role: { type: String, default: "admin" },
 });
 
 module.exports = mongoose.model("owner", ownerSchema);

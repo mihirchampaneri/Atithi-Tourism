@@ -18,12 +18,21 @@ module.exports.loginOwner = async function (req, res) {
         return res.redirect("/");
       }
 
+      // if (result) {
+      //   let token = generateToken(owner);
+      //   res.cookie("token", token);
+      //   req.flash("success", "Welcome Admin! " +owner.fullname);
+      //   res.redirect("admin");
+      // } 
       if (result) {
+        // Add role explicitly if not part of the schema
+        owner.role = "admin";
         let token = generateToken(owner);
         res.cookie("token", token);
-        req.flash("success", "Welcome Admin! " +owner.fullname);
+        req.flash("success", "Welcome Admin! " + owner.fullname);
         res.redirect("admin");
-      } else {
+    }
+      else {
         req.flash("error", "Invalid Email or Password");
         res.redirect("/owners");
       }

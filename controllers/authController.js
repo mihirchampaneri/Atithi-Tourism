@@ -20,6 +20,7 @@ module.exports.registerUser = async function (req, res) {
             email,
             password: hash,
             fullname,
+            role: "user"
           });
 
           let token = generateToken(user);

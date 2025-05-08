@@ -8,6 +8,7 @@ const bookingModel = require('../models/booking-model');
 const contactusModel = require('../models/contactus-model');
 const reviewModel = require('../models/review-model');
 const isLoggedin = require('../middlewares/isLoggedin');
+const { isLoggedIn, authorizeRole } = require("../middlewares/authMiddleware");
 const { loginOwner } = require('../controllers/adminauthController');
 const methodOverride = require('method-override');
 
@@ -22,19 +23,20 @@ if (process.env.NODE_ENV === "development") {
                 .send("You don't have permission to create a new owner");
         }
 
-        let { fullname, email, password } = req.body;
+        let { fullname, email, password, role } = req.body;
 
         let createdOwner = await ownerModel.create({
             fullname,
             email,
             password,
+            role,
         });
         res.status(201).send(createdOwner);
     });
 }
 router.post('/login', loginOwner);
 
-router.get('/admin', isLoggedin, async function (req, res) {
+router.get('/admin', isLoggedIn, authorizeRole("admin"), async function (req, res) {
     let success = req.flash('success');
     let tour = await reviewModel.find();
     let fullname = await reviewModel.find();
@@ -49,7 +51,7 @@ router.get('/admin', isLoggedin, async function (req, res) {
     res.render("admindashboard", { success: success, usercount, tripcount, hotelcount, bookingcount, reviewcount, goodReviews, badReviews, tour, fullname });
 });
 
-router.get('/admin/users', isLoggedin, async function (req, res) {
+router.get('/admin/users', isLoggedIn, authorizeRole("admin"),  async function (req, res) {
     try {
         let success = req.flash('success');
         let users = await userModel.find();
@@ -60,7 +62,7 @@ router.get('/admin/users', isLoggedin, async function (req, res) {
     }
 });
 
-router.post('/admin/users/:id', isLoggedin, async (req, res) => {
+router.post('/admin/users/:id', isLoggedIn, authorizeRole("admin"),  async (req, res) => {
     try {
         const result = await userModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -74,7 +76,7 @@ router.post('/admin/users/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/tours', isLoggedin, async function (req, res) {
+router.get('/admin/tours', isLoggedIn, authorizeRole("admin"),  async function (req, res) {
     try {
         let success = req.flash('success');
         let trip = await tripModel.find();
@@ -85,7 +87,7 @@ router.get('/admin/tours', isLoggedin, async function (req, res) {
     }
 });
 
-router.get('/admin/contactus', isLoggedin, async function (req, res) {
+router.get('/admin/contactus', isLoggedIn, authorizeRole("admin"), async function (req, res) {
     try {
         let success = req.flash('success');
         let contactus = await contactusModel.find();
@@ -96,7 +98,7 @@ router.get('/admin/contactus', isLoggedin, async function (req, res) {
     }
 });
 
-router.post('/admin/contactus/:id', isLoggedin, async (req, res) => {
+router.post('/admin/contactus/:id', isLoggedIn, authorizeRole("admin"), async (req, res) => {
     try {
         const result = await contactusModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -110,7 +112,7 @@ router.post('/admin/contactus/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.post('/admin/tours/:id', isLoggedin, async (req, res) => {
+router.post('/admin/tours/:id', isLoggedIn, authorizeRole("admin"),async (req, res) => {
     try {
         const result = await tripModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -124,7 +126,7 @@ router.post('/admin/tours/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/tours/:id/edit', isLoggedin, async (req, res) => {
+router.get('/admin/tours/:id/edit', isLoggedIn, authorizeRole("admin"), async (req, res) => {
     try {
         const trip = await tripModel.findById(req.params.id);
         if (!trip) {
@@ -136,7 +138,7 @@ router.get('/admin/tours/:id/edit', isLoggedin, async (req, res) => {
     }
 });
 
-router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
+router.put('/admin/tours/:id',isLoggedIn, authorizeRole("admin"), async (req, res) => {
     try {
         const updatedData = {
             name: req.body.name,
@@ -163,7 +165,7 @@ router.put('/admin/tours/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/hotels', isLoggedin, async function (req, res) {
+router.get('/admin/hotels',isLoggedIn, authorizeRole("admin"), async function (req, res) {
     try {
         let success = req.flash('success');
         let trip = await tripModel.find();
@@ -175,7 +177,7 @@ router.get('/admin/hotels', isLoggedin, async function (req, res) {
     }
 });
 
-router.post('/admin/hotels/:id', isLoggedin, async (req, res) => {
+router.post('/admin/hotels/:id', isLoggedIn, authorizeRole("admin"), async (req, res) => {
     try {
         const result = await hotelModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -189,7 +191,7 @@ router.post('/admin/hotels/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/hotels/:id/edit', isLoggedin, async (req, res) => {
+router.get('/admin/hotels/:id/edit', isLoggedIn, authorizeRole("admin"),async (req, res) => {
     try {
         const hotel = await hotelModel.findById(req.params.id);
         if (!hotel) {
@@ -201,7 +203,7 @@ router.get('/admin/hotels/:id/edit', isLoggedin, async (req, res) => {
     }
 });
 
-router.put('/admin/hotels/:id', isLoggedin, async (req, res) => {
+router.put('/admin/hotels/:id',isLoggedIn, authorizeRole("admin"), async (req, res) => {
     try {
         const updatedData = {
             name: req.body.name,
@@ -228,7 +230,7 @@ router.put('/admin/hotels/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/bookings', isLoggedin, async function (req, res) {
+router.get('/admin/bookings',isLoggedIn, authorizeRole("admin"), async function (req, res) {
     try {
         let success = req.flash('success');
         let booking = await bookingModel.find();
@@ -239,7 +241,7 @@ router.get('/admin/bookings', isLoggedin, async function (req, res) {
     }
 });
 
-router.post('/admin/bookings/:id', isLoggedin, async (req, res) => {
+router.post('/admin/bookings/:id', isLoggedIn, authorizeRole("admin"),async (req, res) => {
     try {
         const result = await bookingModel.findByIdAndDelete(req.params.id);
         if (result) {
@@ -253,18 +255,18 @@ router.post('/admin/bookings/:id', isLoggedin, async (req, res) => {
     }
 });
 
-router.get('/admin/trip', isLoggedin, function (req, res) {
+router.get('/admin/trip', isLoggedIn, authorizeRole("admin"), function (req, res) {
     let success = req.flash('success');
     res.render("createtrips", { success: success });
 });
 
-router.get('/admin/hotel', isLoggedin, async function (req, res) {
+router.get('/admin/hotel', isLoggedIn, authorizeRole("admin"),async function (req, res) {
     let success = req.flash('success');
     let trip = await tripModel.find();
     res.render("createhotels", { success: success, trips: trip });
 });
 
-router.get('/admin/reviews', isLoggedin, async function (req, res) {
+router.get('/admin/reviews', isLoggedIn, authorizeRole("admin"), async function (req, res) {
     try {
         let success = req.flash('success');
         let review = await reviewModel.find();
@@ -275,7 +277,7 @@ router.get('/admin/reviews', isLoggedin, async function (req, res) {
     }
 });
 
-router.post('/admin/reviews/:id', isLoggedin, async (req, res) => {
+router.post('/admin/reviews/:id', isLoggedIn, authorizeRole("admin"), async (req, res) => {
     try {
         const result = await reviewModel.findByIdAndDelete(req.params.id);
         if (result) {

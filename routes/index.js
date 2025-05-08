@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const { isLoggedIn, authorizeRole } = require("../middlewares/authMiddleware");
 const isLoggedin = require('../middlewares/isLoggedin');
 const tripModel = require('../models/trip-model'); 
 const hotelModel = require('../models/hotels-model'); 
@@ -32,10 +33,11 @@ router.get('/owners', function (req, res){
     res.render('owner-login', { error , loggedin: false });
 });
 
-router.get('/shop/:tripId?/:hotelId?', isLoggedin, async (req, res) => {
+router.get('/shop/:tripId?/:hotelId?', isLoggedin,  authorizeRole("user"), async (req, res) => {
   const { tripId, hotelId } = req.params;
   const searchQuery = req.query.q || '';
   const searchRegex = new RegExp(searchQuery, 'i');
+  let error= req.flash('error');
 
   try {
     if (!tripId) {
@@ -45,7 +47,7 @@ router.get('/shop/:tripId?/:hotelId?', isLoggedin, async (req, res) => {
       ]);
 
       return res.render('shop', {
-        trips,
+        trips,error,
         user: req.user,
         searchQuery,
         success
@@ -136,7 +138,7 @@ router.get('/shop/:tripId?/:hotelId?', isLoggedin, async (req, res) => {
 //   }
 // });
 
-router.post('/contactus', async (req, res) => {
+router.post('/contactus',authorizeRole("user"), async (req, res) => {
     const { name, email, message } = req.body;
     let success = req.flash('success');
     let error= req.flash('error');
@@ -149,10 +151,6 @@ router.post('/contactus', async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
     }
-});
-
-router.get('/logout', isLoggedin, function (req, res){
-    res.render('shop');
 });
 
 module.exports = router;

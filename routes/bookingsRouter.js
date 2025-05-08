@@ -6,12 +6,13 @@ const upload = require("../config/multer-config");
 const bookingModel = require("../models/booking-model");
 const userModel = require("../models/user-model");
 const isLoggedin = require("../middlewares/isLoggedin");
+const { isLoggedIn, authorizeRole } = require("../middlewares/authMiddleware");
 const PDFDocument = require("pdfkit");
 const twilio = require("twilio");
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-router.post("/create", upload.single("image"), isLoggedin, async function (req, res) {
+router.post("/create", upload.single("image"),  isLoggedin, authorizeRole("user"), async function (req, res) {
   try {
     let {
       image,
@@ -70,7 +71,7 @@ router.post("/create", upload.single("image"), isLoggedin, async function (req, 
 }
 );
 
-router.get("/complete", isLoggedin, async (req, res) => {
+router.get("/complete",  isLoggedin, authorizeRole("user"), async (req, res) => {
   const result = Promise.all([
     stripe.checkout.sessions.retrieve(req.query.session_id, {
       expand: ["payment_intent.payment_method"],
@@ -81,7 +82,7 @@ router.get("/complete", isLoggedin, async (req, res) => {
   console.log(JSON.stringify(await result));
 });
 
-router.get("/payment-success", isLoggedin, async function (req, res) {
+router.get("/payment-success",  isLoggedin, authorizeRole("user"), async function (req, res) {
   const user = await userModel.findById(req.user);
   const booking = await bookingModel
     .findOne({ userId: req.user._id })
@@ -120,7 +121,7 @@ router.get("/payment-success", isLoggedin, async function (req, res) {
   res.render("payment-success", { booking, error, success });
 });
 
-router.get("/download-ticket/:id", isLoggedin, async (req, res) => {
+router.get("/download-ticket/:id", isLoggedin,authorizeRole("user"), async (req, res) => {
   try {
     const booking = await bookingModel.findById(req.params.id);
     if (!booking) {
@@ -266,12 +267,12 @@ router.get("/download-ticket/:id", isLoggedin, async (req, res) => {
   }
 });
 
-router.get("/payment-cancel", isLoggedin, function (req, res) {
-  let error = req.flash("error");
+router.get("/payment-cancel", isLoggedin,authorizeRole("user"), function (req, res) {
+  let error = req.flash("error",'payment canceled');
   res.render("payment-cancel", { error });
 });
 
-router.get("/mybooking", isLoggedin, async (req, res) => {
+router.get("/mybooking", isLoggedin, authorizeRole("user"),async (req, res) => {
   try {
     let error = req.flash("error");
     let success = req.flash("success");
@@ -283,7 +284,7 @@ router.get("/mybooking", isLoggedin, async (req, res) => {
   }
 });
 
-router.delete("/mybooking/:id", isLoggedin, async (req, res) => {
+router.delete("/mybooking/:id", isLoggedin,authorizeRole("user"), async (req, res) => {
   try {
     const result = await bookingModel.findByIdAndDelete(req.params.id);
     if (result) {

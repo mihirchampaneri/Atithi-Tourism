@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>अतिथि Tourism</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/img/travel-bag.png">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/css/styles.css">
+  <!-- <link rel="stylesheet" href="/css/styles.css"> -->
 </head>
-<header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+<header class="fixed top-0 left-0 w-full bg-white shadow-md z-40">
   <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
     <!-- Logo -->
     <a href="/" class="text-blue-500 font-bold text-3xl justify-center items-center">अतिथि Tourism</a>
@@ -33,19 +32,21 @@
         class="px-4 py-2 bg-blue-500 text-white font-medium rounded-full hover:bg-blue-600 transition">Sign Up</a>
     </div>
   </div>
+
+  <% if(success.length>0){ %>
+    <div class="fixed top-6 text-center left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+      <span class="inline-block mt-1 mb-1 text-white"> <%- success %> </span>
+    </div>
+    <% } %>
+      <% if(error.length>0){ %>
+        <div class="fixed top-6 text-center left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+          <span class="inline-block mt-1 mb-1 text-white">
+            <%= error %>
+          </span>
+        </div>
+        <% } %>
 </header>
-<% if(success.length>0){ %>
-  <div class="fixed top-6 text-center z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-    <span class="inline-block mt-1 mb-1 text-white"> <%- success %> </span>
-  </div>
-  <% } %>
-    <% if(error.length>0){ %>
-      <div class="fixed top-6 text-center z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
-        <span class="inline-block mt-1 mb-1 text-white">
-          <%= error %>
-        </span>
-      </div>
-      <% } %>
+
         <!-- <%- include('./partials/header') %> -->
 
         <body class="bg-gray-100 scroll-smooth">

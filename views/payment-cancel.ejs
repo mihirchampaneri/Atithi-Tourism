@@ -1,4 +1,4 @@
-<%- include('./partials/header') %>
+<!-- <%- include('./partials/header') %>
   <div class="flex items-center justify-center min-h-screen">
     <div class="text-center">
       <h1 class="text-4xl text-red-600 mb-4">Payment Failed</h1>
@@ -6,4 +6,26 @@
       <a href="/shop" class="px-4 py-2 bg-blue-500 text-white rounded">Try Again</a>
     </div>
   </div>
-  <%- include('./partials/footer') %>
+  <%- include('./partials/footer') %> -->
+  <% if(error.length>0){ %>
+    <div class="fixed top-6 text-center z-[1] left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+      <span class="inline-block mt-1 mb-1 text-white">
+        <%= error %>
+      </span>
+    </div>
+    <% } %>
+
+      <%- include('./partials/header') %>
+        <div class="min-h-screen flex items-center justify-center bg-neutral-200">
+          <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+            <div class="text-red-500 mb-4">
+              <svg class="w-16 h-16 mx-auto" fill="currentColor" stroke="currentColor" viewBox="0 0 512 512">
+                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+              </svg>
+            </div>
+            <h1 class="text-4xl text-red-600 mb-4">Payment Failed</h1>
+            <p class="mb-4">Something went wrong with your payment. Please try again.</p>
+            <a href="/shop" class="px-4 py-2 bg-blue-500 text-white rounded">Try Again</a>
+          </div>
+        </div>
+        <%- include('./partials/footer') %>

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const isLoggedin = require('../middlewares/isLoggedin');
+const { authorizeRole } = require("../middlewares/authMiddleware");
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const tripModel = require("../models/trip-model");
@@ -24,7 +25,7 @@ router.post('/register', registerUser);
 
 router.post('/login', loginUser);
 
-router.post("/changePassword", changePassword);
+router.post("/changePassword", isLoggedin, authorizeRole("user"), changePassword);
 
 router.get('/logout', logout);
 
@@ -33,7 +34,7 @@ router.get("/myaccount", isLoggedin, (req, res) => {
     res.render("myaccount", { user: req.user, error });
   });
 
-router.get("/review", isLoggedin, async(req, res) => {
+router.get("/review", isLoggedin, authorizeRole("user"), async(req, res) => {
     const bookings = await bookingModel.find({userId: req.user._id }, "tour");
     let success = req.flash('success');
     let error = req.flash('error');
@@ -103,7 +104,7 @@ router.get("/review", isLoggedin, async(req, res) => {
   });
   
   // Add to wishlist
-  router.post('/wishlist/:tripId', isLoggedin, async (req, res) => {
+  router.post('/wishlist/:tripId', isLoggedin, authorizeRole("user"), async (req, res) => {
     try {
       const userId = req.user._id;
       const tripId = req.params.tripId;
@@ -131,7 +132,7 @@ router.get("/review", isLoggedin, async(req, res) => {
     }
   });  
 
-  router.get('/wishlist', isLoggedin, async (req, res) => {
+  router.get('/wishlist', isLoggedin, authorizeRole("user"), async (req, res) => {
     try {
       // Get trip IDs from the logged-in user's wishlist
       const user = await userModel.findById(req.user._id).populate('wishlist');
